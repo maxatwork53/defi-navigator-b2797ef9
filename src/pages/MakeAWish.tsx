@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Heart } from 'lucide-react';
+import { Heart, Star } from 'lucide-react';
 
 const MakeAWish = () => {
   // Function to handle the Make a Wish button click
