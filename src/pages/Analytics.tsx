@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
 import FilterOptions, { FilterState } from '@/components/FilterOptions';
@@ -37,7 +36,6 @@ const PoolAnalytics = () => {
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          {/* Your existing pool analytics content */}
           <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up">
             <h2 className="text-lg font-semibold mb-4">Coming Soon</h2>
             <p className="text-muted-foreground">
