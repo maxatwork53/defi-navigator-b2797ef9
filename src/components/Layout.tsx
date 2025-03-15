@@ -7,7 +7,9 @@ import {
   PieChart, 
   Settings, 
   Menu,
-  X
+  X,
+  Brain,
+  Activity
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -17,9 +19,11 @@ type LayoutProps = {
 };
 
 const SIDEBAR_LINKS = [
-  { to: '/', icon: <Home className="w-5 h-5" />, label: 'Dashboard' },
-  { to: '/analytics', icon: <BarChart3 className="w-5 h-5" />, label: 'Analytics' },
-  { to: '/positions', icon: <PieChart className="w-5 h-5" />, label: 'Positions' },
+  { to: '/', icon: <Home className="w-5 h-5" />, label: 'Overview' },
+  { to: '/analytics', icon: <BarChart3 className="w-5 h-5" />, label: 'Pool Analytics' },
+  { to: '/position-analytics', icon: <Activity className="w-5 h-5" />, label: 'Position Analytics' },
+  { to: '/positions', icon: <PieChart className="w-5 h-5" />, label: 'Your Positions' },
+  { to: '/ai', icon: <Brain className="w-5 h-5" />, label: 'AI' },
   { to: '/settings', icon: <Settings className="w-5 h-5" />, label: 'Settings' },
 ];
 
