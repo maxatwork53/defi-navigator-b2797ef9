@@ -1,36 +1,9 @@
 
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
-import NetworkSelector from '@/components/NetworkSelector';
+import FilterOptions, { FilterState } from '@/components/FilterOptions';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { cn } from '@/lib/utils';
-
-const networkIcons = {
-  ethereum: (
-    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full">
-      <path d="M12 1.75L5.75 12.25L12 16L18.25 12.25L12 1.75Z" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M5.75 13.5L12 22.25L18.25 13.5L12 17.5L5.75 13.5Z" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  ),
-  arbitrum: (
-    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full">
-      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M15.5 9L12.5 15.5L8.5 9L12 12L15.5 9Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  ),
-  base: (
-    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full">
-      <rect x="3" y="3" width="18" height="18" rx="9" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M12 8V16M8 12H16" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  ),
-};
-
-const networks = [
-  { id: 'ethereum', name: 'Ethereum', icon: networkIcons.ethereum },
-  { id: 'arbitrum', name: 'Arbitrum', icon: networkIcons.arbitrum },
-  { id: 'base', name: 'Base', icon: networkIcons.base },
-];
 
 // Mock data for position performance metrics
 const mockPerformanceData = [
@@ -52,25 +25,37 @@ const mockSizeDistributionData = [
 ];
 
 const PositionAnalytics = () => {
-  const [selectedNetwork, setSelectedNetwork] = useState('ethereum');
+  const [filters, setFilters] = useState<FilterState>({
+    networks: ['ethereum'],
+    tokenCategory: null,
+    apyRange: null,
+    dex: null,
+    tvlRange: null,
+    excludeClosedPositions: true,
+    searchQuery: '',
+  });
+  
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
+    console.log('Filter changed:', newFilters);
+    // Here you would typically fetch or filter data based on the new filters
+  };
   
   return (
     <Layout>
       <div className="max-w-7xl mx-auto">
-        <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-          <div className="animate-fade-in">
-            <h1 className="text-2xl font-bold">Position Analytics</h1>
-            <p className="text-muted-foreground mt-1">
-              Detailed analytics and metrics for liquidity positions
-            </p>
-          </div>
-          <NetworkSelector
-            networks={networks}
-            selectedNetwork={selectedNetwork}
-            onNetworkChange={setSelectedNetwork}
-            className="animate-fade-in"
-          />
+        <div className="mb-8 animate-fade-in">
+          <h1 className="text-2xl font-bold">Position Analytics</h1>
+          <p className="text-muted-foreground mt-1">
+            Detailed analytics and metrics for liquidity positions
+          </p>
         </div>
+        
+        <FilterOptions 
+          onFilterChange={handleFilterChange}
+          className="animate-fade-in mb-8"
+          defaultNetwork="ethereum"
+        />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <div className={cn("chart-container animate-slide-in-up")}>

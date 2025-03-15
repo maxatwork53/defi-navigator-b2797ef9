@@ -1,8 +1,25 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import Layout from '@/components/Layout';
+import FilterOptions, { FilterState } from '@/components/FilterOptions';
 
 const AI = () => {
+  const [filters, setFilters] = useState<FilterState>({
+    networks: ['ethereum'],
+    tokenCategory: null,
+    apyRange: null,
+    dex: null,
+    tvlRange: null,
+    excludeClosedPositions: true,
+    searchQuery: '',
+  });
+  
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
+    console.log('Filter changed:', newFilters);
+    // Here you would typically fetch or filter data based on the new filters
+  };
+  
   return (
     <Layout>
       <div className="max-w-7xl mx-auto">
@@ -13,11 +30,50 @@ const AI = () => {
           </p>
         </div>
         
+        <FilterOptions 
+          onFilterChange={handleFilterChange}
+          className="animate-fade-in mb-8"
+          defaultNetwork="ethereum"
+        />
+        
         <div className="grid grid-cols-1 gap-6 mb-8">
+          <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up">
+            <h2 className="text-lg font-semibold mb-4">Position Recommendations</h2>
+            <p className="text-muted-foreground mb-4">
+              Our AI analyzes market conditions and your portfolio to suggest optimal liquidity positions.
+            </p>
+            
+            <div className="space-y-4">
+              <div className="p-4 border border-border rounded-lg hover:bg-secondary/10 transition-colors">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-medium">ETH/USDC 0.05% Pool</h3>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">
+                    High Confidence
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Based on your portfolio and recent price stability, adding liquidity to ETH/USDC with a ±1.5% range around the current price could yield 18-22% APY.
+                </p>
+              </div>
+              
+              <div className="p-4 border border-border rounded-lg hover:bg-secondary/10 transition-colors">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-medium">WBTC/ETH 0.3% Pool</h3>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground">
+                    Medium Confidence
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground mt-2">
+                  Historical correlation between these assets suggests a ±4% range would capture 85% of price movements while maximizing fee generation.
+                </p>
+              </div>
+            </div>
+          </div>
+          
           <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up">
             <h2 className="text-lg font-semibold mb-4">Coming Soon</h2>
             <p className="text-muted-foreground">
-              Our AI assistant will provide personalized recommendations and insights
+              Our AI assistant will soon provide personalized recommendations and insights
               based on your liquidity positions and market conditions.
             </p>
           </div>
