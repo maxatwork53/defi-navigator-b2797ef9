@@ -1,4 +1,7 @@
 
+import React from 'react';
+import { CircleIcon, CircleDot, Hexagon } from 'lucide-react';
+
 export const mockPositionStats = {
   winning: {
     medianTimeHours: 168,  // 7 days
@@ -42,29 +45,15 @@ export const mockHeatmapData = Array.from({ length: 25 }, (_, i) => {
   return { x: parseFloat(x.toFixed(2)), y: parseFloat(y.toFixed(2)), value };
 });
 
+// Use Lucide React icons instead of raw SVG elements
 export const networkIcons = {
-  ethereum: (
-    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full">
-      <path d="M12 1.75L5.75 12.25L12 16L18.25 12.25L12 1.75Z" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M5.75 13.5L12 22.25L18.25 13.5L12 17.5L5.75 13.5Z" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  ),
-  arbitrum: (
-    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full">
-      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M15.5 9L12.5 15.5L8.5 9L12 12L15.5 9Z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
-    </svg>
-  ),
-  base: (
-    <svg viewBox="0 0 24 24" fill="none" className="w-full h-full">
-      <rect x="3" y="3" width="18" height="18" rx="9" stroke="currentColor" strokeWidth="1.5" />
-      <path d="M12 8V16M8 12H16" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  ),
+  ethereum: () => <Hexagon className="w-full h-full" />,
+  arbitrum: () => <CircleDot className="w-full h-full" />,
+  base: () => <CircleIcon className="w-full h-full" />,
 };
 
 export const networks = [
-  { id: 'ethereum', name: 'Ethereum', icon: networkIcons.ethereum },
-  { id: 'arbitrum', name: 'Arbitrum', icon: networkIcons.arbitrum },
-  { id: 'base', name: 'Base', icon: networkIcons.base },
+  { id: 'ethereum', name: 'Ethereum', icon: networkIcons.ethereum() },
+  { id: 'arbitrum', name: 'Arbitrum', icon: networkIcons.arbitrum() },
+  { id: 'base', name: 'Base', icon: networkIcons.base() },
 ];
