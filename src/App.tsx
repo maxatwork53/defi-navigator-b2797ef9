@@ -9,6 +9,8 @@ import PoolAnalytics from "./pages/Analytics"; // Same file, renamed import
 import PositionAnalytics from "./pages/PositionAnalytics";
 import Positions from "./pages/Positions";
 import AI from "./pages/AI";
+import TelegramBot from "./pages/TelegramBot";
+import MakeAWish from "./pages/MakeAWish";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -26,6 +28,8 @@ const App = () => (
           <Route path="/position-analytics" element={<PositionAnalytics />} />
           <Route path="/positions" element={<Positions />} />
           <Route path="/ai" element={<AI />} />
+          <Route path="/telegram-bot" element={<TelegramBot />} />
+          <Route path="/make-a-wish" element={<MakeAWish />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

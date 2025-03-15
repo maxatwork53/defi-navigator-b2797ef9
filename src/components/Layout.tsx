@@ -9,7 +9,9 @@ import {
   Menu,
   X,
   Brain,
-  Activity
+  Activity,
+  MessageSquare,
+  Star
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -24,6 +26,8 @@ const SIDEBAR_LINKS = [
   { to: '/position-analytics', icon: <Activity className="w-5 h-5" />, label: 'Position Analytics' },
   { to: '/positions', icon: <PieChart className="w-5 h-5" />, label: 'Your Positions' },
   { to: '/ai', icon: <Brain className="w-5 h-5" />, label: 'AI' },
+  { to: '/telegram-bot', icon: <MessageSquare className="w-5 h-5" />, label: 'Telegram Bot' },
+  { to: '/make-a-wish', icon: <Star className="w-5 h-5" />, label: 'Make A Wish' },
   { to: '/settings', icon: <Settings className="w-5 h-5" />, label: 'Settings' },
 ];
 
