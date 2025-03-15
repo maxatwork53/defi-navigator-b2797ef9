@@ -5,7 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
-import Analytics from "./pages/Analytics";
+import PoolAnalytics from "./pages/Analytics"; // Same file, renamed import
 import PositionAnalytics from "./pages/PositionAnalytics";
 import Positions from "./pages/Positions";
 import AI from "./pages/AI";
@@ -22,7 +22,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/analytics" element={<Analytics />} />
+          <Route path="/analytics" element={<PoolAnalytics />} />
           <Route path="/position-analytics" element={<PositionAnalytics />} />
           <Route path="/positions" element={<Positions />} />
           <Route path="/ai" element={<AI />} />

@@ -111,7 +111,7 @@ const Index = () => {
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div className="animate-fade-in">
-            <h1 className="text-2xl font-bold">DeFi Liquidity Analytics</h1>
+            <h1 className="text-2xl font-bold">DeFi Liquidity Overview</h1>
             <p className="text-muted-foreground mt-1">
               Insights and metrics for Uniswap V3 liquidity positions
             </p>
