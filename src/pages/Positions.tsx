@@ -6,7 +6,7 @@ import PositionsTable from '@/components/positions/PositionsTable';
 import { mockPositions } from '@/data/mockPositions';
 import { Position } from '@/components/positions/PositionTableRow';
 
-const Positions = () => {
+const Portfolio = () => {
   const [selectedNetwork, setSelectedNetwork] = useState('ethereum');
   
   return (
@@ -22,4 +22,4 @@ const Positions = () => {
   );
 };
 
-export default Positions;
+export default Portfolio;

@@ -12,7 +12,7 @@ const PositionsHeader = ({ selectedNetwork, onNetworkChange }: PositionsHeaderPr
   return (
     <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div className="animate-fade-in">
-        <h1 className="text-2xl font-bold">Your Positions</h1>
+        <h1 className="text-2xl font-bold">Portfolio</h1>
         <p className="text-muted-foreground mt-1">
           Monitor and analyze your active liquidity positions
         </p>

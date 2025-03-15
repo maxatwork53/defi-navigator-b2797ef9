@@ -7,7 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import PoolAnalytics from "./pages/Analytics"; // Same file, renamed import
 import PositionAnalytics from "./pages/PositionAnalytics";
-import Positions from "./pages/Positions";
+import Portfolio from "./pages/Positions";
 import AI from "./pages/AI";
 import TelegramBot from "./pages/TelegramBot";
 import MakeAWish from "./pages/MakeAWish";
@@ -26,7 +26,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/analytics" element={<PoolAnalytics />} />
           <Route path="/position-analytics" element={<PositionAnalytics />} />
-          <Route path="/positions" element={<Positions />} />
+          <Route path="/positions" element={<Portfolio />} />
           <Route path="/ai" element={<AI />} />
           <Route path="/telegram-bot" element={<TelegramBot />} />
           <Route path="/make-a-wish" element={<MakeAWish />} />

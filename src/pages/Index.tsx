@@ -5,6 +5,9 @@ import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import StatCardsSection from '@/components/dashboard/StatCardsSection';
 import PositionMetricsCard from '@/components/dashboard/PositionMetricsCard';
 import ChartsSection from '@/components/dashboard/ChartsSection';
+import PositionsTable from '@/components/positions/PositionsTable';
+import { mockPositions } from '@/data/mockPositions';
+import { Position } from '@/components/positions/PositionTableRow';
 import { formatCurrency, formatPercentage, formatDuration } from '@/utils/formatters';
 import { 
   networks, 
@@ -43,6 +46,11 @@ const Index = () => {
             tvlData={mockTvlData}
             heatmapData={mockHeatmapData}
           />
+        </div>
+        
+        <div className="mt-8">
+          <h2 className="text-xl font-semibold mb-4">Your Positions</h2>
+          <PositionsTable positions={mockPositions as Position[]} />
         </div>
       </div>
     </Layout>
