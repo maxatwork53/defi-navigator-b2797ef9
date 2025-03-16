@@ -29,7 +29,7 @@ const FeesCollectedChart = memo(({ data, pools }: FeesCollectedChartProps) => {
   
   return (
     <div className="bg-card rounded-lg border shadow-sm p-6">
-      <h3 className="text-lg font-medium mb-4">Fees Collected (30 Days)</h3>
+      <h3 className="text-lg font-medium mb-4">Daily Fees Collected (Last 30 Days)</h3>
       <div className="h-[300px]">
         <ChartContainer config={chartConfig}>
           <LineChart
@@ -37,7 +37,15 @@ const FeesCollectedChart = memo(({ data, pools }: FeesCollectedChartProps) => {
             margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+            <XAxis 
+              dataKey="name" 
+              tick={{ fontSize: 12 }} 
+              interval="preserveStartEnd"
+              tickFormatter={(value) => {
+                // Shorten the date display to help with spacing
+                return value.split(' ')[1]; // Show just the day number
+              }}
+            />
             <YAxis 
               tick={{ fontSize: 12 }}
               tickFormatter={(value) => formatCurrency(value)}
@@ -57,7 +65,7 @@ const FeesCollectedChart = memo(({ data, pools }: FeesCollectedChartProps) => {
                 dataKey={pool.name}
                 stroke={getColor(index)}
                 strokeWidth={2}
-                dot={{ r: 3 }}
+                dot={false}
                 activeDot={{ r: 5 }}
               />
             ))}

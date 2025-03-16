@@ -1,4 +1,3 @@
-
 import { Pool } from '@/data/mockPools';
 import { generateMockPoolStats } from './poolStatsGenerator';
 
@@ -26,7 +25,7 @@ export const generateChartData = (pools: Pool[], chartType: string) => {
     }
     
     case 'feesCollected': {
-      result = generateFeesCollectedData(pools);
+      result = generateDailyFeesCollectedData(pools);
       break;
     }
     
@@ -75,22 +74,35 @@ const generateTvlToFeesRatioData = (pools: Pool[]) => {
     .slice(0, 5);
 };
 
-const generateFeesCollectedData = (pools: Pool[]) => {
-  const periods = ['1d', '7d', '14d', '30d'];
-  const lines = pools.slice(0, 5).map(pool => {
-    const stats = generateMockPoolStats(pool);
-    return {
-      id: pool.id,
-      name: pool.name,
-      data: stats.feesCollected
-    };
+const generateDailyFeesCollectedData = (pools: Pool[]) => {
+  // Generate day labels for the last 30 days
+  const days = Array.from({ length: 30 }, (_, i) => {
+    const date = new Date();
+    date.setDate(date.getDate() - (29 - i)); // Start from 29 days ago to today
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   });
 
-  return periods.map((period, index) => {
-    const dataPoint: any = { name: period };
-    lines.forEach(line => {
-      dataPoint[line.name] = line.data[index].value;
+  // Generate data points for each day
+  return days.map((day) => {
+    const dataPoint: any = { name: day };
+    
+    // Add data for top 5 pools
+    pools.slice(0, 5).forEach(pool => {
+      // Base the daily fee on pool volume, fees rate, and add some random variation
+      const baseFeesPerDay = pool.feesCollected / 90; // Assume quarterly fees collected is available
+      
+      // Add random variation between 0.7 and 1.3 of the base value
+      const variation = 0.7 + (Math.random() * 0.6);
+      
+      // Weekend effect - lower on weekends
+      const dayDate = new Date(day + ', 2023');
+      const isWeekend = dayDate.getDay() === 0 || dayDate.getDay() === 6;
+      const weekendFactor = isWeekend ? 0.7 : 1;
+      
+      // Calculate the daily fee with variation
+      dataPoint[pool.name] = baseFeesPerDay * variation * weekendFactor;
     });
+    
     return dataPoint;
   });
 };
