@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
-import FilterOptions, { FilterState } from '@/components/FilterOptions';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { cn } from '@/lib/utils';
 import PositionsPoolTable from '@/components/positions/PositionsPoolTable';
@@ -26,22 +25,6 @@ const mockSizeDistributionData = [
 ];
 
 const PositionAnalytics = () => {
-  const [filters, setFilters] = useState<FilterState>({
-    networks: ['ethereum'],
-    tokenCategory: null,
-    apyRange: null,
-    dex: null,
-    tvlRange: null,
-    excludeClosedPositions: true,
-    searchQuery: '',
-  });
-  
-  const handleFilterChange = (newFilters: FilterState) => {
-    setFilters(newFilters);
-    console.log('Filter changed:', newFilters);
-    // Here you would typically fetch or filter data based on the new filters
-  };
-  
   return (
     <Layout>
       <div className="max-w-7xl mx-auto">
@@ -51,12 +34,6 @@ const PositionAnalytics = () => {
             Detailed analytics and metrics for liquidity positions
           </p>
         </div>
-        
-        <FilterOptions 
-          onFilterChange={handleFilterChange}
-          className="animate-fade-in mb-8"
-          defaultNetwork="ethereum"
-        />
 
         <div className="mb-8 animate-slide-in-up">
           <h2 className="text-xl font-semibold mb-4">Tracked Pools</h2>
