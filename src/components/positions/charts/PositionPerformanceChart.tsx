@@ -1,17 +1,51 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { PoolPosition } from '@/components/positions/PoolPositionsTable';
 
-// Mock data for position performance metrics
-const mockPerformanceData = [
-  { name: '1d', winning: 2.3, losing: -1.5 },
-  { name: '1w', winning: 8.7, losing: -4.2 },
-  { name: '1m', winning: 18.5, losing: -9.8 },
-  { name: '3m', winning: 32.6, losing: -15.3 },
-  { name: '1y', winning: 76.2, losing: -28.7 },
-];
+type PositionPerformanceChartProps = {
+  positions: PoolPosition[];
+};
 
-const PositionPerformanceChart = () => {
+const PositionPerformanceChart = ({ positions }: PositionPerformanceChartProps) => {
+  const performanceData = useMemo(() => {
+    if (!positions.length) return [];
+
+    // Group positions by performance categories
+    const winningPositions = positions.filter(p => p.pnlPercentage > 0);
+    const losingPositions = positions.filter(p => p.pnlPercentage <= 0);
+
+    // Calculate average PnL percentages for different time periods
+    const calculateAvgPnl = (posArray: PoolPosition[], maxAgeDays: number) => {
+      const filteredPositions = posArray.filter(p => p.ageInHours / 24 <= maxAgeDays);
+      if (filteredPositions.length === 0) return 0;
+      return filteredPositions.reduce((sum, p) => sum + p.pnlPercentage, 0) / filteredPositions.length;
+    };
+
+    // Time periods in days
+    const periods = [
+      { name: '1d', days: 1 },
+      { name: '1w', days: 7 },
+      { name: '1m', days: 30 },
+      { name: '3m', days: 90 },
+      { name: '1y', days: 365 },
+    ];
+
+    return periods.map(period => ({
+      name: period.name,
+      winning: calculateAvgPnl(winningPositions, period.days),
+      losing: calculateAvgPnl(losingPositions, period.days),
+    }));
+  }, [positions]);
+
+  if (!positions.length) {
+    return (
+      <div className="chart-container flex items-center justify-center h-[300px] bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <p className="text-muted-foreground text-center">Add pools to view position performance</p>
+      </div>
+    );
+  }
+
   return (
     <div className="chart-container">
       <div className="mb-4">
@@ -20,7 +54,7 @@ const PositionPerformanceChart = () => {
       </div>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
-          data={mockPerformanceData}
+          data={performanceData}
           margin={{
             top: 5,
             right: 30,
@@ -32,10 +66,10 @@ const PositionPerformanceChart = () => {
           <XAxis dataKey="name" tick={{ fontSize: 12 }} />
           <YAxis 
             tick={{ fontSize: 12 }} 
-            tickFormatter={(value) => `${value}%`}
+            tickFormatter={(value) => `${value.toFixed(1)}%`}
           />
           <Tooltip 
-            formatter={(value: number) => [`${value}%`, value >= 0 ? 'Return' : 'Loss']}
+            formatter={(value: number) => [`${value.toFixed(2)}%`, value >= 0 ? 'Return' : 'Loss']}
             contentStyle={{ 
               backgroundColor: 'white', 
               border: '1px solid #f0f0f0',

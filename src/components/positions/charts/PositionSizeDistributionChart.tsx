@@ -1,18 +1,56 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { PoolPosition } from '@/components/positions/PoolPositionsTable';
 
-// Mock data for position size distribution
-const mockSizeDistributionData = [
-  { size: '$0-$1K', count: 320 },
-  { size: '$1K-$5K', count: 580 },
-  { size: '$5K-$10K', count: 450 },
-  { size: '$10K-$50K', count: 210 },
-  { size: '$50K-$100K', count: 120 },
-  { size: '$100K+', count: 80 },
-];
+type PositionSizeDistributionChartProps = {
+  positions: PoolPosition[];
+};
 
-const PositionSizeDistributionChart = () => {
+const PositionSizeDistributionChart = ({ positions }: PositionSizeDistributionChartProps) => {
+  const sizeDistributionData = useMemo(() => {
+    if (!positions.length) return [];
+
+    // Define size buckets
+    const sizeDistribution = [
+      { size: '$0-$1K', count: 0 },
+      { size: '$1K-$5K', count: 0 },
+      { size: '$5K-$10K', count: 0 },
+      { size: '$10K-$50K', count: 0 },
+      { size: '$50K-$100K', count: 0 },
+      { size: '$100K+', count: 0 },
+    ];
+
+    // Categorize positions by size
+    positions.forEach(position => {
+      const value = position.valueInvested;
+
+      if (value < 1000) {
+        sizeDistribution[0].count += 1;
+      } else if (value < 5000) {
+        sizeDistribution[1].count += 1;
+      } else if (value < 10000) {
+        sizeDistribution[2].count += 1;
+      } else if (value < 50000) {
+        sizeDistribution[3].count += 1;
+      } else if (value < 100000) {
+        sizeDistribution[4].count += 1;
+      } else {
+        sizeDistribution[5].count += 1;
+      }
+    });
+
+    return sizeDistribution;
+  }, [positions]);
+
+  if (!positions.length) {
+    return (
+      <div className="chart-container flex items-center justify-center h-[300px] bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+        <p className="text-muted-foreground text-center">Add pools to view position size distribution</p>
+      </div>
+    );
+  }
+
   return (
     <div className="chart-container">
       <div className="mb-4">
@@ -21,7 +59,7 @@ const PositionSizeDistributionChart = () => {
       </div>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart
-          data={mockSizeDistributionData}
+          data={sizeDistributionData}
           margin={{
             top: 5,
             right: 30,

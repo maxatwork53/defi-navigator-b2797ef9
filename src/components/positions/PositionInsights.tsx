@@ -1,7 +1,22 @@
 
 import React from 'react';
 
-const PositionInsights = () => {
+type PositionInsightsProps = {
+  hasPositions: boolean;
+};
+
+const PositionInsights = ({ hasPositions }: PositionInsightsProps) => {
+  if (!hasPositions) {
+    return (
+      <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 mb-8 animate-slide-in-up">
+        <h2 className="text-lg font-semibold mb-4">Position Analytics Insights</h2>
+        <p className="text-muted-foreground text-center my-4">
+          Add pools to view position insights
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 mb-8 animate-slide-in-up">
       <h2 className="text-lg font-semibold mb-4">Position Analytics Insights</h2>

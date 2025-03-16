@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { cn } from '@/lib/utils';
 import PositionsPoolTable from '@/components/positions/PositionsPoolTable';
@@ -9,9 +9,22 @@ import PositionSizeDistributionChart from '@/components/positions/charts/Positio
 import PositionAgeDistributionChart from '@/components/positions/charts/PositionAgeDistributionChart';
 import PositionValueChart from '@/components/positions/charts/PositionValueChart';
 import PositionInsights from '@/components/positions/PositionInsights';
+import { PoolPosition } from '@/components/positions/PoolPositionsTable';
+import { generateMockPositions } from '@/utils/mock/positionGenerator';
 
 const PositionAnalytics = () => {
   const [trackedPoolIds, setTrackedPoolIds] = useState<string[]>([]);
+  const [positions, setPositions] = useState<PoolPosition[]>([]);
+
+  useEffect(() => {
+    if (trackedPoolIds.length > 0) {
+      // Generate positions data based on pool IDs
+      const mockPositions = generateMockPositions(trackedPoolIds);
+      setPositions(mockPositions);
+    } else {
+      setPositions([]);
+    }
+  }, [trackedPoolIds]);
 
   const handlePoolsChange = (poolIds: string[]) => {
     setTrackedPoolIds(poolIds);
@@ -47,20 +60,20 @@ const PositionAnalytics = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <div className={cn("animate-slide-in-up")}>
-            <PositionPerformanceChart />
+            <PositionPerformanceChart positions={positions} />
           </div>
 
           <div className={cn("animate-slide-in-up")}>
-            <PositionSizeDistributionChart />
+            <PositionSizeDistributionChart positions={positions} />
           </div>
         </div>
         
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 animate-slide-in-up">
-          <PositionAgeDistributionChart />
-          <PositionValueChart />
+          <PositionAgeDistributionChart positions={positions} />
+          <PositionValueChart positions={positions} />
         </div>
         
-        <PositionInsights />
+        <PositionInsights hasPositions={positions.length > 0} />
       </div>
     </Layout>
   );
