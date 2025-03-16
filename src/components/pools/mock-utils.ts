@@ -41,11 +41,13 @@ export type PoolStats = {
       medianTimeHours: number;
       medianUsdValue: number;
       medianRangePercentage: number;
+      percentage: number;
     };
     losing: {
       medianTimeHours: number;
       medianUsdValue: number;
       medianRangePercentage: number;
+      percentage: number;
     };
   };
 };
@@ -90,6 +92,10 @@ export const generateMockPoolStats = (pool: Pool): PoolStats => {
     }))
   };
   
+  // Generate winning/losing percentages that add up to 100%
+  const winningPercentage = 62.5; // 62.5%
+  const losingPercentage = 37.5; // 37.5%
+  
   // Mock position stats
   const positionStats = {
     overall: {
@@ -112,8 +118,14 @@ export const generateMockPoolStats = (pool: Pool): PoolStats => {
         topQuartile: Math.floor(Math.random() * 336) + 168 // 7-21 days in hours
       }
     },
-    winning: mockPositionStats.winning,
-    losing: mockPositionStats.losing
+    winning: {
+      ...mockPositionStats.winning,
+      percentage: winningPercentage
+    },
+    losing: {
+      ...mockPositionStats.losing,
+      percentage: losingPercentage
+    }
   };
   
   return { swapVolume, swaps, feesCollected, tvlChange, lpStats, positionStats };

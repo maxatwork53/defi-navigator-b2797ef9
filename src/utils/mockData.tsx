@@ -7,11 +7,13 @@ export const mockPositionStats = {
     medianTimeHours: 168,  // 7 days
     medianUsdValue: 5280,
     medianRangePercentage: 76,
+    percentage: 62.5,  // Added percentage for winning positions
   },
   losing: {
     medianTimeHours: 72,  // 3 days
     medianUsdValue: 3120,
     medianRangePercentage: 42,
+    percentage: 37.5,  // Added percentage for losing positions
   },
 };
 

@@ -29,11 +29,13 @@ type PositionStatsType = {
     medianTimeHours: number;
     medianUsdValue: number;
     medianRangePercentage: number;
+    percentage?: number;
   };
   losing: {
     medianTimeHours: number;
     medianUsdValue: number;
     medianRangePercentage: number;
+    percentage?: number;
   };
 };
 
@@ -42,6 +44,10 @@ type PositionMetricsStatsProps = {
 };
 
 const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
+  // Set default percentages if not provided
+  const winningPercentage = positionStats.winning.percentage || 62.5;
+  const losingPercentage = positionStats.losing.percentage || 37.5;
+
   const formatValue = (value: number, type: string) => {
     if (type === 'value') return formatCurrency(value);
     if (type === 'range') return formatPercentage(value);
@@ -66,8 +72,12 @@ const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
               {positionStats.overall.value.topQuartile !== undefined && (
                 <TableHead>Top Quartile</TableHead>
               )}
-              <TableHead className="text-success">Winning Positions</TableHead>
-              <TableHead className="text-destructive">Losing Positions</TableHead>
+              <TableHead className="text-success">
+                Winning Positions ({formatPercentage(winningPercentage)})
+              </TableHead>
+              <TableHead className="text-destructive">
+                Losing Positions ({formatPercentage(losingPercentage)})
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
