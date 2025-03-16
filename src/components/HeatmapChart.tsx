@@ -39,7 +39,7 @@ const HeatmapChart = ({
   };
 
   return (
-    <div className={cn("chart-container animate-slide-in-up", className)}>
+    <div className={cn("chart-container animate-slide-in-up h-full", className)}>
       <div className="mb-4">
         <h3 className="text-lg font-semibold">{title}</h3>
         {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
