@@ -30,17 +30,30 @@ type PoolPositionsTableProps = {
 const PoolPositionsTable = ({ poolIds, className }: PoolPositionsTableProps) => {
   const { toast } = useToast();
   const [positions, setPositions] = useState<PoolPosition[]>([]);
+  
+  // Add a ref to track if this is the first render or a pool ID change
+  const [prevPoolIds, setPrevPoolIds] = useState<string[]>([]);
 
   useEffect(() => {
-    if (poolIds.length > 0) {
-      // In a real app, we would fetch positions from an API
-      // For now, generate mock positions based on the pool IDs
-      const mockPositions = generateMockPositions(poolIds);
-      setPositions(mockPositions);
-    } else {
-      setPositions([]);
+    // Only regenerate positions when pool IDs actually change
+    const poolIdsChanged = 
+      poolIds.length !== prevPoolIds.length || 
+      poolIds.some((id, index) => prevPoolIds[index] !== id);
+    
+    if (poolIdsChanged) {
+      if (poolIds.length > 0) {
+        // In a real app, we would fetch positions from an API
+        // For now, generate mock positions based on the pool IDs with a fixed seed
+        const mockPositions = generateMockPositions(poolIds);
+        setPositions(mockPositions);
+      } else {
+        setPositions([]);
+      }
+      
+      // Update previous pool IDs
+      setPrevPoolIds(poolIds);
     }
-  }, [poolIds]);
+  }, [poolIds, prevPoolIds]);
 
   const copyToClipboard = (tokenId: string) => {
     navigator.clipboard.writeText(tokenId);
