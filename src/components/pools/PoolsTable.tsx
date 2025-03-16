@@ -49,6 +49,7 @@ const PoolsTable = ({ pools }: PoolsTableProps) => {
             <TableHead>Network</TableHead>
             <TableHead>DEX</TableHead>
             <TableHead>TVL</TableHead>
+            <TableHead>Volume</TableHead>
             <TableHead>Fees Collected</TableHead>
           </TableRow>
         </TableHeader>
@@ -95,11 +96,12 @@ const PoolsTable = ({ pools }: PoolsTableProps) => {
                   <TableCell className="py-2">{networkNames[pool.network] || pool.network}</TableCell>
                   <TableCell className="py-2">{pool.dex}</TableCell>
                   <TableCell className="py-2">{formatCurrency(pool.tvl)}</TableCell>
+                  <TableCell className="py-2">{formatCurrency(pool.volume)}</TableCell>
                   <TableCell className="py-2">{formatCurrency(pool.feesCollected)}</TableCell>
                 </TableRow>
                 {expandedPoolId === pool.id && (
                   <TableRow>
-                    <TableCell colSpan={7} className="p-0">
+                    <TableCell colSpan={8} className="p-0">
                       <ExpandedPoolInfo pool={pool} />
                     </TableCell>
                   </TableRow>
@@ -108,7 +110,7 @@ const PoolsTable = ({ pools }: PoolsTableProps) => {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={7} className="h-24 text-center">
+              <TableCell colSpan={8} className="h-24 text-center">
                 No pools found matching your filters.
               </TableCell>
             </TableRow>
