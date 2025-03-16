@@ -27,21 +27,23 @@ const Index = () => {
 
         <StatCardsSection formattedTvl={formattedTvl} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          <div className="lg:col-span-1">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 min-h-[500px]">
+          <div className="lg:col-span-1 flex">
             <PositionMetricsCard
               positionStats={mockPositionStats}
               formatDuration={formatDuration}
               formatCurrency={formatCurrency}
               formatPercentage={formatPercentage}
+              className="w-full"
             />
           </div>
           
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 flex">
             <ChartsSection 
               comparisonData={mockComparisonData}
               tvlData={mockTvlData}
               heatmapData={mockHeatmapData}
+              className="w-full"
             />
           </div>
         </div>
