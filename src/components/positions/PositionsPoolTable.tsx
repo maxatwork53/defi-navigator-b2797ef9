@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
@@ -29,12 +29,20 @@ const networkNames: Record<string, string> = {
 
 type PositionsPoolTableProps = {
   className?: string;
+  onPoolsChange?: (poolIds: string[]) => void;
 };
 
-const PositionsPoolTable = ({ className }: PositionsPoolTableProps) => {
+const PositionsPoolTable = ({ className, onPoolsChange }: PositionsPoolTableProps) => {
   const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [trackedPools, setTrackedPools] = useState<TrackedPool[]>([]);
+
+  // Notify parent component when tracked pools change
+  useEffect(() => {
+    if (onPoolsChange) {
+      onPoolsChange(trackedPools.map(pool => pool.id));
+    }
+  }, [trackedPools, onPoolsChange]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
