@@ -20,7 +20,7 @@ export const generateChartData = (pools: Pool[], chartType: string) => {
     }
     
     case 'tvlToFeesRatio': {
-      result = generateTvlToFeesRatioData(pools);
+      result = generateFeesToTvlPercentageData(pools);
       break;
     }
     
@@ -56,21 +56,21 @@ const generateWinningPositionsData = (pools: Pool[]) => {
     .slice(0, 5);
 };
 
-const generateTvlToFeesRatioData = (pools: Pool[]) => {
+const generateFeesToTvlPercentageData = (pools: Pool[]) => {
   return pools
     .map(pool => {
       const stats = generateMockPoolStats(pool);
       const feesLast24h = stats.feesCollected[0].value;
-      const ratio = feesLast24h > 0 ? (pool.tvl / feesLast24h) : 0;
+      const percentage = feesLast24h > 0 ? (feesLast24h / pool.tvl) * 100 : 0;
       return {
         name: pool.name,
-        value: ratio,
+        value: percentage,
         poolId: pool.id,
         tvl: pool.tvl,
         fees: feesLast24h
       };
     })
-    .sort((a, b) => a.value - b.value)
+    .sort((a, b) => b.value - a.value)
     .slice(0, 5);
 };
 
