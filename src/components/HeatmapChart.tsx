@@ -38,10 +38,6 @@ const HeatmapChart = ({
     return `rgba(59, 130, 246, ${normalized})`;
   };
 
-  // Generate labels for X and Y axes
-  const xLabels = ["ETH-USDC", "ETH-USDT", "WBTC-ETH"];
-  const yLabels = ["0.01-0.1%", "0.1-0.5%", "0.5-1%"];
-
   return (
     <div className={cn("chart-container animate-slide-in-up", className)}>
       <div className="mb-4">
@@ -67,8 +63,6 @@ const HeatmapChart = ({
             {data.map((point, i) => {
               const xIndex = xValues.indexOf(point.x);
               const yIndex = yValues.indexOf(point.y);
-              const xLabel = xLabels[xIndex] || `${point.x}`;
-              const yLabel = yLabels[yIndex] || `${point.y}`;
               
               return (
                 <div
@@ -81,7 +75,7 @@ const HeatmapChart = ({
                     height: `${cellHeight}%`,
                     backgroundColor: colorScale(point.value),
                   }}
-                  title={`${xLabel}, ${yLabel}, Value: ${point.value}`}
+                  title={`${xLabel}: ${point.x}, ${yLabel}: ${point.y}, Value: ${point.value}`}
                 />
               );
             })}

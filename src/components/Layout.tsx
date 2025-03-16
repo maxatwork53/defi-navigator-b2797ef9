@@ -15,7 +15,6 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { ThemeToggle } from './ThemeToggle';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -50,7 +49,7 @@ const Layout = ({ children }: LayoutProps) => {
       {/* Sidebar */}
       <aside 
         className={cn(
-          "fixed inset-y-0 left-0 z-20 w-64 bg-white dark:bg-secondary border-r border-border transform transition-transform duration-300 ease-in-out",
+          "fixed inset-y-0 left-0 z-20 w-64 bg-white border-r border-border transform transition-transform duration-300 ease-in-out",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
           isMobile ? "shadow-lg" : ""
         )}
@@ -58,7 +57,7 @@ const Layout = ({ children }: LayoutProps) => {
         <div className="h-16 flex items-center justify-between px-4 border-b border-border">
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-primary-foreground" />
+              <BarChart3 className="w-5 h-5 text-white" />
             </div>
             <span className="font-semibold text-lg">DeFi Navigator</span>
           </Link>
@@ -105,7 +104,7 @@ const Layout = ({ children }: LayoutProps) => {
           sidebarOpen ? (isMobile ? "ml-0" : "ml-64") : "ml-0"
         )}
       >
-        <header className="h-16 bg-white dark:bg-secondary border-b border-border sticky top-0 z-10 px-4 flex items-center justify-between">
+        <header className="h-16 bg-white border-b border-border sticky top-0 z-10 px-4 flex items-center justify-between">
           {(!sidebarOpen || isMobile) && (
             <button
               onClick={() => setSidebarOpen(true)}
@@ -117,8 +116,8 @@ const Layout = ({ children }: LayoutProps) => {
           <div className="text-lg font-medium ml-auto">
             {SIDEBAR_LINKS.find(link => link.to === location.pathname)?.label || 'Dashboard'}
           </div>
-          <div className="ml-auto flex items-center">
-            <ThemeToggle />
+          <div className="ml-auto">
+            {/* Header content here */}
           </div>
         </header>
         <div className="p-6">
