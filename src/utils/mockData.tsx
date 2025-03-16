@@ -7,50 +7,54 @@ export const networks = [
   { id: 'all', name: 'All Networks', icon: networkIcons.all },
 ];
 
-// Mock data for position stats
+// Updated mock data for position stats with winning/losing structure
 export const mockPositionStats = {
-  totalPositions: 12,
-  activePositions: 8,
-  avgPositionAge: 67, // days
-  totalValueLocked: 45920.75,
-  totalFeesEarned: 1245.32,
-  avgAPY: 18.7,
-  highestAPY: 42.3,
+  winning: {
+    medianTimeHours: 168, // 7 days in hours
+    medianUsdValue: 12500,
+    medianRangePercentage: 80
+  },
+  losing: {
+    medianTimeHours: 72, // 3 days in hours
+    medianUsdValue: 8000,
+    medianRangePercentage: 40
+  }
 };
 
-// Mock data for comparison chart
+// Updated mock data for comparison chart with winning/losing properties
 export const mockComparisonData = [
-  { name: 'Your APY', value: 18.7 },
-  { name: 'Market Avg', value: 12.4 },
+  { name: 'Time in Position', winning: 168, losing: 72 },
+  { name: 'USD Value', winning: 12500, losing: 8000 },
+  { name: 'Range Coverage', winning: 80, losing: 40 },
 ];
 
-// Mock data for TVL chart
+// Updated mock data for TVL chart with name instead of date
 export const mockTvlData = [
-  { date: '2023-01-01', value: 32000 },
-  { date: '2023-02-01', value: 35600 },
-  { date: '2023-03-01', value: 38200 },
-  { date: '2023-04-01', value: 36800 },
-  { date: '2023-05-01', value: 40100 },
-  { date: '2023-06-01', value: 42500 },
-  { date: '2023-07-01', value: 41200 },
-  { date: '2023-08-01', value: 43800 },
-  { date: '2023-09-01', value: 45920 },
+  { name: 'Jan', value: 32000 },
+  { name: 'Feb', value: 35600 },
+  { name: 'Mar', value: 38200 },
+  { name: 'Apr', value: 36800 },
+  { name: 'May', value: 40100 },
+  { name: 'Jun', value: 42500 },
+  { name: 'Jul', value: 41200 },
+  { name: 'Aug', value: 43800 },
+  { name: 'Sep', value: 45920 },
 ];
 
-// Mock data for heatmap
+// Updated mock data for heatmap with numeric x and y values
 export const mockHeatmapData = [
-  { x: 'ETH-USDC', y: '0.01-0.1%', value: 42 },
-  { x: 'ETH-USDC', y: '0.1-0.5%', value: 89 },
-  { x: 'ETH-USDC', y: '0.5-1%', value: 13 },
-  { x: 'ETH-USDT', y: '0.01-0.1%', value: 35 },
-  { x: 'ETH-USDT', y: '0.1-0.5%', value: 74 },
-  { x: 'ETH-USDT', y: '0.5-1%', value: 18 },
-  { x: 'WBTC-ETH', y: '0.01-0.1%', value: 25 },
-  { x: 'WBTC-ETH', y: '0.1-0.5%', value: 63 },
-  { x: 'WBTC-ETH', y: '0.5-1%', value: 22 },
+  { x: 1, y: 1, value: 42 },
+  { x: 1, y: 2, value: 89 },
+  { x: 1, y: 3, value: 13 },
+  { x: 2, y: 1, value: 35 },
+  { x: 2, y: 2, value: 74 },
+  { x: 2, y: 3, value: 18 },
+  { x: 3, y: 1, value: 25 },
+  { x: 3, y: 2, value: 63 },
+  { x: 3, y: 3, value: 22 },
 ];
 
-// Mock stats cards data
+// Keep existing mock stats cards data
 export const mockStatsCards = [
   {
     title: 'Total Value Locked',
@@ -82,7 +86,7 @@ export const mockStatsCards = [
   },
 ];
 
-// Mock feature cards data
+// Keep existing mock feature cards data
 export const mockFeatureCards = [
   {
     title: 'Position Security',

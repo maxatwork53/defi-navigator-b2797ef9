@@ -34,8 +34,8 @@ const ChartsSection = ({ comparisonData, tvlData, heatmapData, className }: Char
           data={heatmapData}
           title="Liquidity Concentration"
           description="Distribution of liquidity across price ranges"
-          xLabel="Price Lower"
-          yLabel="Price Upper"
+          xLabel="Pool Pairs"
+          yLabel="Fee Tiers"
         />
       </div>
     </>
