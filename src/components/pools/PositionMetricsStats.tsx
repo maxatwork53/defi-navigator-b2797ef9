@@ -58,70 +58,67 @@ const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
   return (
     <Card className="mb-4">
       <CardContent className="pt-6">
-        <h3 className="text-sm font-semibold mb-4">Position Metrics</h3>
+        <h3 className="text-sm font-semibold mb-2">Position Metrics</h3>
         
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[180px]">Metric</TableHead>
-              <TableHead>Median</TableHead>
-              <TableHead>Average</TableHead>
-              {positionStats.overall.value.bottomQuartile !== undefined && (
-                <TableHead>Bottom Quartile</TableHead>
-              )}
-              {positionStats.overall.value.topQuartile !== undefined && (
-                <TableHead>Top Quartile</TableHead>
-              )}
-              <TableHead className="text-success">
-                Winning Positions ({formatPercentage(winningPercentage)})
-              </TableHead>
-              <TableHead className="text-destructive">
-                Losing Positions ({formatPercentage(losingPercentage)})
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="font-medium">Value of Positions</TableCell>
-              <TableCell>{formatValue(positionStats.overall.value.median, 'value')}</TableCell>
-              <TableCell>{formatValue(positionStats.overall.value.average, 'value')}</TableCell>
-              {positionStats.overall.value.bottomQuartile !== undefined && (
-                <TableCell>{formatValue(positionStats.overall.value.bottomQuartile, 'value')}</TableCell>
-              )}
-              {positionStats.overall.value.topQuartile !== undefined && (
-                <TableCell>{formatValue(positionStats.overall.value.topQuartile, 'value')}</TableCell>
-              )}
-              <TableCell className="text-success">{formatCurrency(positionStats.winning.medianUsdValue)}</TableCell>
-              <TableCell className="text-destructive">{formatCurrency(positionStats.losing.medianUsdValue)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-medium">Price Range (%)</TableCell>
-              <TableCell>{formatValue(positionStats.overall.priceRange.median, 'range')}</TableCell>
-              <TableCell>{formatValue(positionStats.overall.priceRange.average, 'range')}</TableCell>
-              {positionStats.overall.priceRange.bottomQuartile !== undefined && (
-                <TableCell>{formatValue(positionStats.overall.priceRange.bottomQuartile, 'range')}</TableCell>
-              )}
-              {positionStats.overall.priceRange.topQuartile !== undefined && (
-                <TableCell>{formatValue(positionStats.overall.priceRange.topQuartile, 'range')}</TableCell>
-              )}
-              <TableCell className="text-success">{formatPercentage(positionStats.winning.medianRangePercentage)}</TableCell>
-              <TableCell className="text-destructive">{formatPercentage(positionStats.losing.medianRangePercentage)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-medium">Time in Position</TableCell>
-              <TableCell>{formatValue(positionStats.overall.timeInPosition.median, 'time')}</TableCell>
-              <TableCell>{formatValue(positionStats.overall.timeInPosition.average, 'time')}</TableCell>
-              {positionStats.overall.timeInPosition.bottomQuartile !== undefined && (
-                <TableCell>{formatValue(positionStats.overall.timeInPosition.bottomQuartile, 'time')}</TableCell>
-              )}
-              {positionStats.overall.timeInPosition.topQuartile !== undefined && (
-                <TableCell>{formatValue(positionStats.overall.timeInPosition.topQuartile, 'time')}</TableCell>
-              )}
-              <TableCell className="text-success">{formatDuration(positionStats.winning.medianTimeHours)}</TableCell>
-              <TableCell className="text-destructive">{formatDuration(positionStats.losing.medianTimeHours)}</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        <div className="grid grid-cols-7 gap-2 mb-1 border-b pb-1">
+          <div className="font-medium text-xs">Metric</div>
+          <div className="font-medium text-xs">Median</div>
+          <div className="font-medium text-xs">Average</div>
+          {positionStats.overall.value.bottomQuartile !== undefined && (
+            <div className="font-medium text-xs">Bottom Quartile</div>
+          )}
+          {positionStats.overall.value.topQuartile !== undefined && (
+            <div className="font-medium text-xs">Top Quartile</div>
+          )}
+          <div className="font-medium text-xs text-success">
+            Winning ({formatPercentage(winningPercentage)})
+          </div>
+          <div className="font-medium text-xs text-destructive">
+            Losing ({formatPercentage(losingPercentage)})
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-7 gap-2 py-1">
+          <div className="text-xs text-muted-foreground">Value of Positions</div>
+          <div className="text-xs font-medium">{formatValue(positionStats.overall.value.median, 'value')}</div>
+          <div className="text-xs font-medium">{formatValue(positionStats.overall.value.average, 'value')}</div>
+          {positionStats.overall.value.bottomQuartile !== undefined && (
+            <div className="text-xs font-medium">{formatValue(positionStats.overall.value.bottomQuartile, 'value')}</div>
+          )}
+          {positionStats.overall.value.topQuartile !== undefined && (
+            <div className="text-xs font-medium">{formatValue(positionStats.overall.value.topQuartile, 'value')}</div>
+          )}
+          <div className="text-xs font-medium text-success">{formatCurrency(positionStats.winning.medianUsdValue)}</div>
+          <div className="text-xs font-medium text-destructive">{formatCurrency(positionStats.losing.medianUsdValue)}</div>
+        </div>
+        
+        <div className="grid grid-cols-7 gap-2 py-1">
+          <div className="text-xs text-muted-foreground">Price Range (%)</div>
+          <div className="text-xs font-medium">{formatValue(positionStats.overall.priceRange.median, 'range')}</div>
+          <div className="text-xs font-medium">{formatValue(positionStats.overall.priceRange.average, 'range')}</div>
+          {positionStats.overall.priceRange.bottomQuartile !== undefined && (
+            <div className="text-xs font-medium">{formatValue(positionStats.overall.priceRange.bottomQuartile, 'range')}</div>
+          )}
+          {positionStats.overall.priceRange.topQuartile !== undefined && (
+            <div className="text-xs font-medium">{formatValue(positionStats.overall.priceRange.topQuartile, 'range')}</div>
+          )}
+          <div className="text-xs font-medium text-success">{formatPercentage(positionStats.winning.medianRangePercentage)}</div>
+          <div className="text-xs font-medium text-destructive">{formatPercentage(positionStats.losing.medianRangePercentage)}</div>
+        </div>
+        
+        <div className="grid grid-cols-7 gap-2 py-1">
+          <div className="text-xs text-muted-foreground">Time in Position</div>
+          <div className="text-xs font-medium">{formatValue(positionStats.overall.timeInPosition.median, 'time')}</div>
+          <div className="text-xs font-medium">{formatValue(positionStats.overall.timeInPosition.average, 'time')}</div>
+          {positionStats.overall.timeInPosition.bottomQuartile !== undefined && (
+            <div className="text-xs font-medium">{formatValue(positionStats.overall.timeInPosition.bottomQuartile, 'time')}</div>
+          )}
+          {positionStats.overall.timeInPosition.topQuartile !== undefined && (
+            <div className="text-xs font-medium">{formatValue(positionStats.overall.timeInPosition.topQuartile, 'time')}</div>
+          )}
+          <div className="text-xs font-medium text-success">{formatDuration(positionStats.winning.medianTimeHours)}</div>
+          <div className="text-xs font-medium text-destructive">{formatDuration(positionStats.losing.medianTimeHours)}</div>
+        </div>
       </CardContent>
     </Card>
   );
