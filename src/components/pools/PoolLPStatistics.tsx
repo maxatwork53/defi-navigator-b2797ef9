@@ -33,70 +33,65 @@ const PoolLPStatistics = ({ tvlChange, lpStats }: PoolLPStatsProps) => {
   return (
     <Card className="mb-4">
       <CardContent className="pt-6">
-        <h3 className="text-sm font-semibold mb-3">Pool LP Statistics</h3>
+        <h3 className="text-sm font-semibold mb-2">Pool LP Statistics</h3>
         
-        {/* Top metrics - Addresses and Positions */}
-        <div className="grid grid-cols-2 gap-4 mb-4">
-          <div className="bg-muted/30 p-3 rounded-md">
-            <span className="text-sm text-muted-foreground block mb-1">Addresses Providing Liquidity:</span>
-            <span className="font-medium text-lg">{lpStats.addressesCount}</span>
+        {/* Top metrics row - Addresses and Positions */}
+        <div className="grid grid-cols-2 gap-2 mb-2">
+          <div className="bg-muted/30 p-2 rounded-md">
+            <span className="text-xs text-muted-foreground block">Addresses Providing Liquidity:</span>
+            <span className="font-medium text-base">{lpStats.addressesCount}</span>
           </div>
-          <div className="bg-muted/30 p-3 rounded-md">
-            <span className="text-sm text-muted-foreground block mb-1">Open Positions:</span>
-            <span className="font-medium text-lg">{lpStats.openPositionsCount}</span>
+          <div className="bg-muted/30 p-2 rounded-md">
+            <span className="text-xs text-muted-foreground block">Open Positions:</span>
+            <span className="font-medium text-base">{lpStats.openPositionsCount}</span>
           </div>
         </div>
         
-        <Separator className="my-4" />
+        <Separator className="my-2" />
         
-        {/* Unified table for time-based metrics */}
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[180px]">Metric</TableHead>
-              {periods.map((period, index) => (
-                <TableHead key={index}>{period}</TableHead>
-              ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {/* TVL Change Row */}
-            <TableRow>
-              <TableCell className="font-medium">TVL Change</TableCell>
-              {tvlChange.map((item, index) => {
-                const isPositive = item.value > 0;
-                return (
-                  <TableCell key={index}>
-                    <span className={isPositive ? 'text-success' : 'text-destructive'}>
-                      {isPositive ? (
-                        <ArrowUpRight className="h-3.5 w-3.5 mr-1 inline" />
-                      ) : (
-                        <ArrowDownRight className="h-3.5 w-3.5 mr-1 inline" />
-                      )}
-                      {formatPercentage(Math.abs(item.value))}
-                    </span>
-                  </TableCell>
-                );
-              })}
-            </TableRow>
-            
-            {/* Newly Opened Positions Row */}
-            <TableRow>
-              <TableCell className="font-medium">Newly Opened</TableCell>
-              {lpStats.newPositions.map((item, index) => (
-                <TableCell key={index}>{item.opened}</TableCell>
-              ))}
-            </TableRow>
-            
-            {/* Closed Positions Row */}
-            <TableRow>
-              <TableCell className="font-medium">Closed</TableCell>
-              {lpStats.newPositions.map((item, index) => (
-                <TableCell key={index}>{item.closed}</TableCell>
-              ))}
-            </TableRow>
-          </TableBody>
-        </Table>
+        {/* Unified table for time-based metrics with tighter layout */}
+        <div className="grid grid-cols-5 gap-2 mb-1 border-b pb-1">
+          <div className="font-medium text-xs">Metric</div>
+          {periods.map((period, index) => (
+            <div key={index} className="font-medium text-xs">{period}</div>
+          ))}
+        </div>
+        
+        {/* TVL Change Row */}
+        <div className="grid grid-cols-5 gap-2 py-1">
+          <div className="text-xs text-muted-foreground">TVL Change</div>
+          {tvlChange.map((item, index) => {
+            const isPositive = item.value > 0;
+            return (
+              <div key={index} className="text-xs font-medium">
+                <span className={isPositive ? 'text-success' : 'text-destructive'}>
+                  {isPositive ? (
+                    <ArrowUpRight className="h-3 w-3 mr-0.5 inline" />
+                  ) : (
+                    <ArrowDownRight className="h-3 w-3 mr-0.5 inline" />
+                  )}
+                  {formatPercentage(Math.abs(item.value))}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        
+        {/* Newly Opened Positions Row */}
+        <div className="grid grid-cols-5 gap-2 py-1">
+          <div className="text-xs text-muted-foreground">Newly Opened</div>
+          {lpStats.newPositions.map((item, index) => (
+            <div key={index} className="text-xs font-medium">{item.opened}</div>
+          ))}
+        </div>
+        
+        {/* Closed Positions Row */}
+        <div className="grid grid-cols-5 gap-2 py-1">
+          <div className="text-xs text-muted-foreground">Closed</div>
+          {lpStats.newPositions.map((item, index) => (
+            <div key={index} className="text-xs font-medium">{item.closed}</div>
+          ))}
+        </div>
       </CardContent>
     </Card>
   );
