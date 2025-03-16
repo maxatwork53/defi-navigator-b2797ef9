@@ -52,8 +52,16 @@ export type PoolStats = {
   };
 };
 
+// Cache for pool stats to avoid regenerating on every render
+const poolStatsCache = new Map<string, PoolStats>();
+
 // Generate mock data for the expanded section
 export const generateMockPoolStats = (pool: Pool): PoolStats => {
+  // Check if we have cached data for this pool
+  if (poolStatsCache.has(pool.id)) {
+    return poolStatsCache.get(pool.id)!;
+  }
+  
   // Time periods in order: 24h, 7d, 14d, 30d
   const periods = ['1d', '7d', '14d', '30d'];
   
@@ -160,5 +168,109 @@ export const generateMockPoolStats = (pool: Pool): PoolStats => {
     }
   };
   
-  return { swapVolume, swaps, feesCollected, tvlChange, lpStats, positionStats };
+  const stats = { swapVolume, swaps, feesCollected, tvlChange, lpStats, positionStats };
+  
+  // Cache the result
+  poolStatsCache.set(pool.id, stats);
+  
+  return stats;
+};
+
+// Pre-generate chart data for all pools
+const precalculatedChartData = new Map<string, any>();
+
+export const generateChartData = (pools: Pool[], chartType: string) => {
+  const cacheKey = `${chartType}_${pools.map(p => p.id).join('_')}`;
+  
+  if (precalculatedChartData.has(cacheKey)) {
+    return precalculatedChartData.get(cacheKey);
+  }
+  
+  let result;
+  
+  switch (chartType) {
+    case 'winningPositions': {
+      result = pools
+        .map(pool => {
+          const stats = generateMockPoolStats(pool);
+          return {
+            name: pool.name,
+            value: stats.positionStats.winning.percentage,
+            poolId: pool.id
+          };
+        })
+        .sort((a, b) => b.value - a.value)
+        .slice(0, 5);
+      break;
+    }
+    
+    case 'tvlToFeesRatio': {
+      result = pools
+        .map(pool => {
+          const stats = generateMockPoolStats(pool);
+          const feesLast24h = stats.feesCollected[0].value;
+          const ratio = feesLast24h > 0 ? (pool.tvl / feesLast24h) : 0;
+          return {
+            name: pool.name,
+            value: ratio,
+            poolId: pool.id,
+            tvl: pool.tvl,
+            fees: feesLast24h
+          };
+        })
+        .sort((a, b) => a.value - b.value)
+        .slice(0, 5);
+      break;
+    }
+    
+    case 'feesCollected': {
+      const periods = ['1d', '7d', '14d', '30d'];
+      const lines = pools.slice(0, 5).map(pool => {
+        const stats = generateMockPoolStats(pool);
+        return {
+          id: pool.id,
+          name: pool.name,
+          data: stats.feesCollected
+        };
+      });
+
+      result = periods.map((period, index) => {
+        const dataPoint: any = { name: period };
+        lines.forEach(line => {
+          dataPoint[line.name] = line.data[index].value;
+        });
+        return dataPoint;
+      });
+      break;
+    }
+    
+    case 'priceRange': {
+      const periods = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+      const topPools = pools.slice(0, 3);
+      
+      result = periods.map(period => {
+        const dataPoint: any = { name: period };
+        
+        topPools.forEach(pool => {
+          const poolStats = generateMockPoolStats(pool);
+          const winningBase = poolStats.positionStats.winning.medianRangePercentage;
+          const losingBase = poolStats.positionStats.losing.medianRangePercentage;
+          
+          const variation = (Math.random() * 0.4) - 0.2;
+          
+          dataPoint[`${pool.name} (Win)`] = winningBase * (1 + variation);
+          dataPoint[`${pool.name} (Loss)`] = losingBase * (1 + variation);
+        });
+        
+        return dataPoint;
+      });
+      break;
+    }
+    
+    default:
+      result = [];
+  }
+  
+  precalculatedChartData.set(cacheKey, result);
+  return result;
 };
