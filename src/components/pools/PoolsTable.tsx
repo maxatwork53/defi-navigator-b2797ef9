@@ -47,8 +47,8 @@ const PoolsTable = ({
             <TableHead>Network</TableHead>
             <TableHead>DEX</TableHead>
             <TableHead>TVL</TableHead>
-            <TableHead>Volume</TableHead>
-            <TableHead>Fees Collected</TableHead>
+            <TableHead>Volume (24h)</TableHead>
+            <TableHead>Fees Collected (24h)</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
