@@ -61,7 +61,7 @@ const PoolsTable = ({ pools }: PoolsTableProps) => {
                   onClick={() => handleRowClick(pool.id)}
                 >
                   <TableCell className="py-2">
-                    <div className="flex space-x-2">
+                    <div className="flex items-center space-x-2">
                       <Button 
                         variant="ghost" 
                         size="icon" 
