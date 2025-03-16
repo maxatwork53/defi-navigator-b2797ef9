@@ -116,8 +116,13 @@ export const generateMockPoolStats = (pool: Pool): PoolStats => {
   };
   
   // Generate winning/losing percentages that add up to 100%
-  const winningPercentage = 62.5; // 62.5%
-  const losingPercentage = 37.5; // 37.5%
+  const poolFactor = (pool.id.charCodeAt(0) % 10) / 10; // Use pool ID to create variation
+  const winningPercentage = 55 + (poolFactor * 15); // 55-70%
+  const losingPercentage = 100 - winningPercentage; // 30-45%
+  
+  // Calculate median range percentages based on pool volume
+  const rangeFactorWinning = 5 + ((pool.volume / 5000000) * 10); // 5-15% based on volume
+  const rangeFactorLosing = 8 + ((pool.volume / 5000000) * 12); // 8-20% based on volume
   
   // Mock position stats
   const positionStats = {
@@ -142,11 +147,15 @@ export const generateMockPoolStats = (pool: Pool): PoolStats => {
       }
     },
     winning: {
-      ...mockPositionStats.winning,
+      medianTimeHours: Math.floor(Math.random() * 240) + 72, // 3-13 days in hours
+      medianUsdValue: (pool.tvl / lpStats.openPositionsCount) * 1.2, // 20% higher than average
+      medianRangePercentage: rangeFactorWinning,
       percentage: winningPercentage
     },
     losing: {
-      ...mockPositionStats.losing,
+      medianTimeHours: Math.floor(Math.random() * 120) + 24, // 1-6 days in hours
+      medianUsdValue: (pool.tvl / lpStats.openPositionsCount) * 0.8, // 20% lower than average
+      medianRangePercentage: rangeFactorLosing,
       percentage: losingPercentage
     }
   };

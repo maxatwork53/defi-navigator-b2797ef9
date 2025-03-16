@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import FilterOptions from '@/components/FilterOptions';
 import { FilterState } from '@/components/filters/types';
 import PoolsTable from '@/components/pools/PoolsTable';
+import PoolsCharts from '@/components/pools/PoolsCharts';
 import { useFilteredPools } from '@/hooks/use-filtered-pools';
 
 const PoolAnalytics = () => {
@@ -43,6 +44,10 @@ const PoolAnalytics = () => {
         <div className="mb-8 animate-fade-in">
           <h2 className="text-xl font-semibold mb-4">Liquidity Pools</h2>
           <PoolsTable pools={pools} />
+        </div>
+        
+        <div className="animate-fade-in">
+          <PoolsCharts pools={pools} />
         </div>
       </div>
     </Layout>
