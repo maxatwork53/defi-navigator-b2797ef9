@@ -14,6 +14,9 @@ export const formatPercentage = (value: number) => {
 };
 
 export const formatDuration = (hours: number) => {
+  // Round to the nearest full hour
+  hours = Math.round(hours);
+  
   const days = Math.floor(hours / 24);
   const remainingHours = hours % 24;
   
