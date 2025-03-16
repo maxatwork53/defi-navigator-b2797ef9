@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { formatCurrency, formatPercentage, formatDuration } from '@/utils/formatters';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
 
@@ -53,13 +52,12 @@ const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
   return (
     <Card className="mb-4">
       <CardContent className="pt-6">
-        <h3 className="text-sm font-semibold mb-4">Position Metrics (All Positions)</h3>
+        <h3 className="text-sm font-semibold mb-4">Position Metrics</h3>
         
-        {/* First section - Overall Position Stats */}
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[180px]">Overall Metric</TableHead>
+              <TableHead className="w-[180px]">Metric</TableHead>
               <TableHead>Median</TableHead>
               <TableHead>Average</TableHead>
               {positionStats.overall.value.bottomQuartile !== undefined && (
@@ -68,6 +66,8 @@ const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
               {positionStats.overall.value.topQuartile !== undefined && (
                 <TableHead>Top Quartile</TableHead>
               )}
+              <TableHead className="text-success">Winning Positions</TableHead>
+              <TableHead className="text-destructive">Losing Positions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -81,6 +81,8 @@ const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
               {positionStats.overall.value.topQuartile !== undefined && (
                 <TableCell>{formatValue(positionStats.overall.value.topQuartile, 'value')}</TableCell>
               )}
+              <TableCell className="text-success">{formatCurrency(positionStats.winning.medianUsdValue)}</TableCell>
+              <TableCell className="text-destructive">{formatCurrency(positionStats.losing.medianUsdValue)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Price Range (%)</TableCell>
@@ -92,6 +94,8 @@ const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
               {positionStats.overall.priceRange.topQuartile !== undefined && (
                 <TableCell>{formatValue(positionStats.overall.priceRange.topQuartile, 'range')}</TableCell>
               )}
+              <TableCell className="text-success">{formatPercentage(positionStats.winning.medianRangePercentage)}</TableCell>
+              <TableCell className="text-destructive">{formatPercentage(positionStats.losing.medianRangePercentage)}</TableCell>
             </TableRow>
             <TableRow>
               <TableCell className="font-medium">Time in Position</TableCell>
@@ -103,36 +107,6 @@ const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
               {positionStats.overall.timeInPosition.topQuartile !== undefined && (
                 <TableCell>{formatValue(positionStats.overall.timeInPosition.topQuartile, 'time')}</TableCell>
               )}
-            </TableRow>
-          </TableBody>
-        </Table>
-        
-        <Separator className="my-4" />
-        
-        {/* Second section - Winning vs Losing Positions */}
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[180px]">Position Type</TableHead>
-              <TableHead>Metric</TableHead>
-              <TableHead className="text-success">Winning Positions</TableHead>
-              <TableHead className="text-destructive">Losing Positions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell rowSpan={3} className="font-medium border-r">Median Values</TableCell>
-              <TableCell className="font-medium">Value of Positions</TableCell>
-              <TableCell className="text-success">{formatCurrency(positionStats.winning.medianUsdValue)}</TableCell>
-              <TableCell className="text-destructive">{formatCurrency(positionStats.losing.medianUsdValue)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-medium">Price Range (%)</TableCell>
-              <TableCell className="text-success">{formatPercentage(positionStats.winning.medianRangePercentage)}</TableCell>
-              <TableCell className="text-destructive">{formatPercentage(positionStats.losing.medianRangePercentage)}</TableCell>
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-medium">Time in Position</TableCell>
               <TableCell className="text-success">{formatDuration(positionStats.winning.medianTimeHours)}</TableCell>
               <TableCell className="text-destructive">{formatDuration(positionStats.losing.medianTimeHours)}</TableCell>
             </TableRow>
