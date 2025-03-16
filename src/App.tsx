@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "@/hooks/use-theme";
 import Index from "./pages/Index";
-import PoolAnalytics from "./pages/Analytics"; // Same file, renamed import
+import PoolComparison from "./pages/Analytics"; // Same file, renamed import
 import PositionAnalytics from "./pages/PositionAnalytics";
 import Portfolio from "./pages/Positions";
 import AI from "./pages/AI";
@@ -26,7 +26,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
-            <Route path="/analytics" element={<PoolAnalytics />} />
+            <Route path="/analytics" element={<PoolComparison />} />
             <Route path="/position-analytics" element={<PositionAnalytics />} />
             <Route path="/positions" element={<Portfolio />} />
             <Route path="/ai" element={<AI />} />

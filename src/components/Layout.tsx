@@ -23,7 +23,7 @@ type LayoutProps = {
 
 const SIDEBAR_LINKS = [
   { to: '/', icon: <Home className="w-5 h-5" />, label: 'Overview' },
-  { to: '/analytics', icon: <BarChart3 className="w-5 h-5" />, label: 'Pool Analytics' },
+  { to: '/analytics', icon: <BarChart3 className="w-5 h-5" />, label: 'Pool Comparison' },
   { to: '/position-analytics', icon: <Activity className="w-5 h-5" />, label: 'Position Analytics' },
   { to: '/positions', icon: <PieChart className="w-5 h-5" />, label: 'Portfolio' },
   { to: '/ai', icon: <Brain className="w-5 h-5" />, label: 'AI' },

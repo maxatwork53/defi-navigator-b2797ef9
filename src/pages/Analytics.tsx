@@ -7,7 +7,7 @@ import PoolsTable from '@/components/pools/PoolsTable';
 import PoolsCharts from '@/components/pools/PoolsCharts';
 import { useFilteredPools } from '@/hooks/use-filtered-pools';
 
-const PoolAnalytics = () => {
+const PoolComparison = () => {
   const [filters, setFilters] = useState<FilterState>({
     networks: ['ethereum'],
     tokenCategory: [],
@@ -28,7 +28,7 @@ const PoolAnalytics = () => {
     <Layout>
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold">Pool Analytics</h1>
+          <h1 className="text-2xl font-bold">Pool Comparison</h1>
           <p className="text-muted-foreground mt-1">
             Detailed metrics and insights for liquidity pools
           </p>
@@ -55,4 +55,4 @@ const PoolAnalytics = () => {
   );
 };
 
-export default PoolAnalytics;
+export default PoolComparison;
