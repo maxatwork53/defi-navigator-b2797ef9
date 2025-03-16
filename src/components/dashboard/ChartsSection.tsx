@@ -24,11 +24,12 @@ const ChartsSection = ({ comparisonData, tvlData, heatmapData, className }: Char
         />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
         <AreaChart 
           data={tvlData}
           title="Total Value Locked"
           description="Trend of TVL across all pools"
+          className="h-[300px]"
         />
         <HeatmapChart 
           data={heatmapData}
@@ -36,6 +37,7 @@ const ChartsSection = ({ comparisonData, tvlData, heatmapData, className }: Char
           description="Distribution of liquidity across price ranges"
           xLabel="Price Lower"
           yLabel="Price Upper"
+          className="h-[300px]"
         />
       </div>
     </div>
