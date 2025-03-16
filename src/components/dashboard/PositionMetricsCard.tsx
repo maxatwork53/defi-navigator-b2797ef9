@@ -33,7 +33,7 @@ const PositionMetricsCard = ({
 }: PositionMetricsCardProps) => {
   return (
     <div className={cn(
-      "bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 lg:col-span-1 animate-slide-in-up", 
+      "bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 lg:col-span-1 animate-slide-in-up h-[365px]", 
       className
     )}>
       <h2 className="text-lg font-semibold mb-4 dark:text-white">Position Metrics</h2>
