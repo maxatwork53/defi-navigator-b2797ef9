@@ -4,6 +4,7 @@ import Layout from '@/components/Layout';
 import FilterOptions, { FilterState } from '@/components/FilterOptions';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import { cn } from '@/lib/utils';
+import PositionsPoolTable from '@/components/positions/PositionsPoolTable';
 
 // Mock data for position performance metrics
 const mockPerformanceData = [
@@ -56,6 +57,14 @@ const PositionAnalytics = () => {
           className="animate-fade-in mb-8"
           defaultNetwork="ethereum"
         />
+
+        <div className="mb-8 animate-slide-in-up">
+          <h2 className="text-xl font-semibold mb-4">Tracked Pools</h2>
+          <PositionsPoolTable className="mb-6" />
+          <p className="text-sm text-muted-foreground">
+            Manually add pools you want to track and analyze. Search by pool name or address.
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
           <div className={cn("chart-container animate-slide-in-up")}>
