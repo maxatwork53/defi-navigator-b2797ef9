@@ -16,6 +16,7 @@ import {
   Settings as SettingsIcon, 
   User 
 } from 'lucide-react';
+import { Switch } from '@/components/ui/switch';
 
 type AlertPreference = {
   id: string;
@@ -104,9 +105,9 @@ const Settings = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="space-y-8">
-            <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 animate-slide-in-up">
               <div className="flex items-center mb-4">
-                <div className="p-2 bg-primary/10 rounded-full mr-4">
+                <div className="p-2 bg-primary/10 dark:bg-primary/20 rounded-full mr-4">
                   <Bell className="w-5 h-5 text-primary" />
                 </div>
                 <div>
@@ -119,20 +120,10 @@ const Settings = () => {
                 {alertPreferences.map((preference) => (
                   <div key={preference.id} className="flex items-start">
                     <div className="flex items-center h-6 mt-0.5">
-                      <button
-                        onClick={() => toggleAlertPreference(preference.id)}
-                        className={cn(
-                          "w-10 h-5 relative rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20",
-                          preference.enabled ? "bg-primary" : "bg-muted"
-                        )}
-                      >
-                        <span
-                          className={cn(
-                            "block w-4 h-4 bg-white rounded-full transform transition-transform",
-                            preference.enabled ? "translate-x-5" : "translate-x-1"
-                          )}
-                        />
-                      </button>
+                      <Switch
+                        checked={preference.enabled}
+                        onCheckedChange={() => toggleAlertPreference(preference.id)}
+                      />
                     </div>
                     <div className="ml-3 flex-1">
                       <div className="flex items-center">
@@ -148,10 +139,10 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up delay-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 animate-slide-in-up delay-100">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center">
-                  <div className="p-2 bg-primary/10 rounded-full mr-4">
+                  <div className="p-2 bg-primary/10 dark:bg-primary/20 rounded-full mr-4">
                     <MessageSquare className="w-5 h-5 text-primary" />
                   </div>
                   <div>
@@ -206,9 +197,9 @@ const Settings = () => {
           </div>
 
           <div className="space-y-8">
-            <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up delay-200">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 animate-slide-in-up delay-200">
               <div className="flex items-center mb-6">
-                <div className="p-2 bg-primary/10 rounded-full mr-4">
+                <div className="p-2 bg-primary/10 dark:bg-primary/20 rounded-full mr-4">
                   <SettingsIcon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
@@ -223,7 +214,7 @@ const Settings = () => {
                     type="text"
                     value="0x71C7656EC7ab88b098defB751B7401B5f6d8976F"
                     readOnly
-                    className="w-full pl-3 pr-10 py-2 rounded-lg border border-border bg-secondary/30 text-sm"
+                    className="w-full pl-3 pr-10 py-2 rounded-lg border border-border dark:border-gray-700 bg-secondary/30 dark:bg-gray-700/50 text-sm dark:text-gray-200"
                   />
                   <button className="absolute right-2 top-2 text-muted-foreground hover:text-foreground transition-colors">
                     <ExternalLink className="w-4 h-4" />
@@ -235,7 +226,7 @@ const Settings = () => {
                     type="text"
                     value="0x1a23BA45c6789dEFa1B2C3d45E6f78901a23b456"
                     readOnly
-                    className="w-full pl-3 pr-10 py-2 rounded-lg border border-border bg-secondary/30 text-sm"
+                    className="w-full pl-3 pr-10 py-2 rounded-lg border border-border dark:border-gray-700 bg-secondary/30 dark:bg-gray-700/50 text-sm dark:text-gray-200"
                   />
                   <button className="absolute right-2 top-2 text-muted-foreground hover:text-foreground transition-colors">
                     <ExternalLink className="w-4 h-4" />
@@ -246,7 +237,7 @@ const Settings = () => {
                   <input
                     type="text"
                     placeholder="Add new wallet address"
-                    className="w-full pl-3 pr-4 py-2 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/60 transition-all text-sm"
+                    className="w-full pl-3 pr-4 py-2 rounded-lg border border-border dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/40 focus:border-primary/60 transition-all text-sm dark:bg-gray-700/50 dark:placeholder-gray-400"
                   />
                 </div>
 
@@ -258,9 +249,9 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up delay-300">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 animate-slide-in-up delay-300">
               <div className="flex items-center mb-6">
-                <div className="p-2 bg-primary/10 rounded-full mr-4">
+                <div className="p-2 bg-primary/10 dark:bg-primary/20 rounded-full mr-4">
                   <Percent className="w-5 h-5 text-primary" />
                 </div>
                 <div>
@@ -272,7 +263,7 @@ const Settings = () => {
               <div className="space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-1">Out of Range Alert Threshold</label>
-                  <select className="w-full px-3 py-2 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/60 transition-all">
+                  <select className="w-full px-3 py-2 rounded-lg border border-border dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/40 focus:border-primary/60 transition-all dark:bg-gray-700/50 dark:text-gray-200">
                     <option>Immediate</option>
                     <option>After 15 minutes</option>
                     <option>After 30 minutes</option>
@@ -285,7 +276,7 @@ const Settings = () => {
 
                 <div>
                   <label className="block text-sm font-medium mb-1">Price Movement Threshold</label>
-                  <select className="w-full px-3 py-2 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/60 transition-all">
+                  <select className="w-full px-3 py-2 rounded-lg border border-border dark:border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary/20 dark:focus:ring-primary/40 focus:border-primary/60 transition-all dark:bg-gray-700/50 dark:text-gray-200">
                     <option>1%</option>
                     <option>3%</option>
                     <option>5%</option>
