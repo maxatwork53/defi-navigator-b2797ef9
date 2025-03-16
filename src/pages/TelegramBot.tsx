@@ -29,9 +29,9 @@ const TelegramBot = () => {
                 </ul>
               </div>
               
-              <div className="flex-shrink-0 w-64 h-64 bg-gradient-to-br from-secondary/30 to-primary/20 dark:from-gray-700/50 dark:to-primary/20 animate-pulse rounded-lg border border-border dark:border-gray-700 flex items-center justify-center overflow-hidden relative">
+              <div className="flex-shrink-0 w-64 h-64 bg-gradient-to-br from-secondary/30 to-primary/20 dark:from-gray-700/50 dark:to-primary/20 rounded-lg border border-border dark:border-gray-700 flex items-center justify-center overflow-hidden relative">
                 <div className="absolute inset-0 bg-grid-pattern opacity-10"></div>
-                <QrCode className="w-40 h-40 text-primary animate-fade-in relative z-10" />
+                <QrCode className="w-40 h-40 text-primary relative z-10" />
                 <div className="absolute bottom-4 left-4 right-4 text-xs text-center bg-background/80 dark:bg-gray-800/80 p-1 rounded backdrop-blur-sm">
                   Scan to access bot
                 </div>
