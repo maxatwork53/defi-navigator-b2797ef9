@@ -119,13 +119,7 @@ const generateTvlChangePercentageData = (pools: Pool[]) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   });
   
-  // Generate base TVL values for day 30 (today)
-  const baseTvlValues = new Map<string, number>();
-  poolsToShow.forEach(pool => {
-    baseTvlValues.set(pool.id, pool.tvl);
-  });
-  
-  // Generate daily percentage changes relative to the final day (which is 100%)
+  // Generate daily percentage changes where all pools start at 100% on day 1 (30 days ago)
   return dates.map((date, dayIndex) => {
     const dataPoint: any = { date };
     
@@ -133,27 +127,23 @@ const generateTvlChangePercentageData = (pools: Pool[]) => {
       // The base volatility factor determines how much the TVL fluctuates
       const volatilityFactor = 0.15; // 15% maximum fluctuation
       
-      // On the last day (today), all pools should show 100%
-      if (dayIndex === days - 1) {
+      // On the first day (30 days ago), all pools should show 100%
+      if (dayIndex === 0) {
         dataPoint[pool.name] = 100;
       } else {
-        // For previous days, generate realistic fluctuations that trend upward or downward
+        // For later days, generate realistic fluctuations that trend upward or downward
         // based on the pool's characteristics
-        
-        // Calculate days from the first day (0-based)
-        const daysFromStart = dayIndex;
-        const daysToEnd = days - 1 - dayIndex;
         
         // Pool-specific trend factor (some pools grow, others decline)
         const poolTrendFactor = (parseInt(pool.id, 36) % 10) / 10 - 0.5; // -0.5 to 0.5
         
         // Linear trend component based on pool characteristics
-        const trendComponent = poolTrendFactor * (daysFromStart / days) * 30; // Up to ±15% trend
+        const trendComponent = poolTrendFactor * (dayIndex / days) * 30; // Up to ±15% trend
         
-        // Random fluctuation component (higher for earlier dates, converging to 100% at the end)
-        const randomFactor = (Math.random() * 2 - 1) * volatilityFactor * (daysToEnd / days);
+        // Random fluctuation component (increases as we move away from day 1)
+        const randomFactor = (Math.random() * 2 - 1) * volatilityFactor * (dayIndex / days);
         
-        // Calculate percentage (100% is the baseline at the end)
+        // Calculate percentage (100% is the baseline at day 1)
         const percentage = 100 + trendComponent + randomFactor * 100;
         
         // Assign the percentage value to this pool for this day
