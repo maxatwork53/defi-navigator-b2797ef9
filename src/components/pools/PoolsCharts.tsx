@@ -1,7 +1,7 @@
 
 import React, { memo, useMemo } from 'react';
 import { Pool } from '@/data/mockPools';
-import { generateChartData } from './mock-utils';
+import { generateChartData } from '@/utils/mock';
 import WinningPositionsChart from '@/components/charts/WinningPositionsChart';
 import TvlToFeesRatioChart from '@/components/charts/TvlToFeesRatioChart';
 import FeesCollectedChart from '@/components/charts/FeesCollectedChart';

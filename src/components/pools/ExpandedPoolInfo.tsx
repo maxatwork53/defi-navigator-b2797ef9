@@ -1,35 +1,54 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Pool } from '@/data/mockPools';
-import { generateMockPoolStats } from './mock-utils';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PoolUsageStatistics from './PoolUsageStatistics';
 import PoolLPStatistics from './PoolLPStatistics';
 import PositionMetricsStats from './PositionMetricsStats';
+import { generateMockPoolStats } from '@/utils/mock';
 
 interface ExpandedPoolInfoProps {
   pool: Pool;
 }
 
 const ExpandedPoolInfo = ({ pool }: ExpandedPoolInfoProps) => {
-  // Generate mock data for the expanded section
-  const poolStats = generateMockPoolStats(pool);
+  // Use memoization to avoid recalculating on every render
+  const poolStats = useMemo(() => generateMockPoolStats(pool), [pool]);
   
   return (
-    <div className="px-4 py-3 bg-muted/20 animate-fade-in border-t">
-      <PoolUsageStatistics 
-        swapVolume={poolStats.swapVolume}
-        swaps={poolStats.swaps}
-        feesCollected={poolStats.feesCollected}
-      />
-      
-      <PoolLPStatistics 
-        tvlChange={poolStats.tvlChange}
-        lpStats={poolStats.lpStats}
-      />
-      
-      <PositionMetricsStats 
-        positionStats={poolStats.positionStats}
-      />
+    <div className="py-4 px-2">
+      <Tabs defaultValue="usage" className="w-full">
+        <TabsList className="w-full mb-4">
+          <TabsTrigger value="usage" className="flex-1">Pool Usage</TabsTrigger>
+          <TabsTrigger value="liquidity" className="flex-1">LP Statistics</TabsTrigger>
+          <TabsTrigger value="positions" className="flex-1">Position Metrics</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="usage">
+          <PoolUsageStatistics
+            swapVolume={poolStats.swapVolume}
+            swaps={poolStats.swaps}
+            fees={poolStats.feesCollected}
+            tvlChange={poolStats.tvlChange}
+          />
+        </TabsContent>
+        
+        <TabsContent value="liquidity">
+          <PoolLPStatistics 
+            addressesCount={poolStats.lpStats.addressesCount}
+            openPositionsCount={poolStats.lpStats.openPositionsCount}
+            newPositions={poolStats.lpStats.newPositions}
+          />
+        </TabsContent>
+        
+        <TabsContent value="positions">
+          <PositionMetricsStats 
+            overall={poolStats.positionStats.overall}
+            winning={poolStats.positionStats.winning}
+            losing={poolStats.positionStats.losing}
+          />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };
