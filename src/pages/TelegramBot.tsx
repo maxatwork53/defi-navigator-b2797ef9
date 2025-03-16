@@ -8,7 +8,7 @@ const TelegramBot = () => {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto space-y-8">
-        <Card className="border-border">
+        <Card>
           <CardHeader>
             <CardTitle>DeFi Navigator Telegram Bot</CardTitle>
           </CardHeader>

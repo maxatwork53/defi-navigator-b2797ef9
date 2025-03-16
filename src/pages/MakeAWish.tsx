@@ -15,7 +15,7 @@ const MakeAWish = () => {
   return (
     <Layout>
       <div className="max-w-3xl mx-auto mt-10">
-        <Card className="border border-border">
+        <Card className="border-2 border-primary/20">
           <CardHeader className="text-center">
             <CardTitle className="text-3xl flex items-center justify-center gap-2">
               <Heart className="text-primary w-8 h-8" />
