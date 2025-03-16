@@ -1,3 +1,4 @@
+
 export const formatCurrency = (value: number) => {
   if (value >= 1000000) {
     return `${(value / 1000000).toFixed(1)}M`;
@@ -9,7 +10,7 @@ export const formatCurrency = (value: number) => {
 };
 
 export const formatPercentage = (value: number) => {
-  return `${value}%`;
+  return `${value.toFixed(1)}%`;
 };
 
 export const formatDuration = (hours: number) => {
