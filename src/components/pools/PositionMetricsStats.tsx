@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { formatCurrency, formatPercentage, formatDuration } from '@/utils/formatters';
+import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
 
 type PositionStatsType = {
   overall: {
@@ -41,111 +42,102 @@ type PositionMetricsStatsProps = {
   positionStats: PositionStatsType;
 };
 
-const PositionStatsRow = ({ 
-  label, 
-  data 
-}: { 
-  label: string, 
-  data: { 
-    median: number, 
-    average: number, 
-    bottomQuartile?: number, 
-    topQuartile?: number 
-  } 
-}) => {
-  const formatValue = (value: number) => {
-    if (label.includes('Value')) return formatCurrency(value);
-    if (label.includes('Range')) return formatPercentage(value);
-    if (label.includes('Time')) return formatDuration(value);
+const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
+  const formatValue = (value: number, type: string) => {
+    if (type === 'value') return formatCurrency(value);
+    if (type === 'range') return formatPercentage(value);
+    if (type === 'time') return formatDuration(value);
     return value.toLocaleString();
   };
 
   return (
-    <div className="grid grid-cols-5 gap-4 py-1">
-      <div className="text-sm text-muted-foreground">{label}</div>
-      <div className="text-sm font-medium">Median: {formatValue(data.median)}</div>
-      <div className="text-sm font-medium">Average: {formatValue(data.average)}</div>
-      {data.bottomQuartile !== undefined && (
-        <div className="text-sm font-medium">Bottom Quartile: {formatValue(data.bottomQuartile)}</div>
-      )}
-      {data.topQuartile !== undefined && (
-        <div className="text-sm font-medium">Top Quartile: {formatValue(data.topQuartile)}</div>
-      )}
-    </div>
-  );
-};
-
-const PositionMetricsStats = ({ positionStats }: PositionMetricsStatsProps) => {
-  return (
     <Card className="mb-4">
       <CardContent className="pt-6">
-        <h3 className="text-sm font-semibold mb-3">Position Metrics (All Positions)</h3>
-        <PositionStatsRow 
-          label="Value of Positions" 
-          data={positionStats.overall.value} 
-        />
-        <PositionStatsRow 
-          label="Price Range (%)" 
-          data={positionStats.overall.priceRange} 
-        />
-        <PositionStatsRow 
-          label="Time in Position" 
-          data={positionStats.overall.timeInPosition} 
-        />
+        <h3 className="text-sm font-semibold mb-4">Position Metrics (All Positions)</h3>
+        
+        {/* First section - Overall Position Stats */}
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[180px]">Overall Metric</TableHead>
+              <TableHead>Median</TableHead>
+              <TableHead>Average</TableHead>
+              {positionStats.overall.value.bottomQuartile !== undefined && (
+                <TableHead>Bottom Quartile</TableHead>
+              )}
+              {positionStats.overall.value.topQuartile !== undefined && (
+                <TableHead>Top Quartile</TableHead>
+              )}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell className="font-medium">Value of Positions</TableCell>
+              <TableCell>{formatValue(positionStats.overall.value.median, 'value')}</TableCell>
+              <TableCell>{formatValue(positionStats.overall.value.average, 'value')}</TableCell>
+              {positionStats.overall.value.bottomQuartile !== undefined && (
+                <TableCell>{formatValue(positionStats.overall.value.bottomQuartile, 'value')}</TableCell>
+              )}
+              {positionStats.overall.value.topQuartile !== undefined && (
+                <TableCell>{formatValue(positionStats.overall.value.topQuartile, 'value')}</TableCell>
+              )}
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Price Range (%)</TableCell>
+              <TableCell>{formatValue(positionStats.overall.priceRange.median, 'range')}</TableCell>
+              <TableCell>{formatValue(positionStats.overall.priceRange.average, 'range')}</TableCell>
+              {positionStats.overall.priceRange.bottomQuartile !== undefined && (
+                <TableCell>{formatValue(positionStats.overall.priceRange.bottomQuartile, 'range')}</TableCell>
+              )}
+              {positionStats.overall.priceRange.topQuartile !== undefined && (
+                <TableCell>{formatValue(positionStats.overall.priceRange.topQuartile, 'range')}</TableCell>
+              )}
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Time in Position</TableCell>
+              <TableCell>{formatValue(positionStats.overall.timeInPosition.median, 'time')}</TableCell>
+              <TableCell>{formatValue(positionStats.overall.timeInPosition.average, 'time')}</TableCell>
+              {positionStats.overall.timeInPosition.bottomQuartile !== undefined && (
+                <TableCell>{formatValue(positionStats.overall.timeInPosition.bottomQuartile, 'time')}</TableCell>
+              )}
+              {positionStats.overall.timeInPosition.topQuartile !== undefined && (
+                <TableCell>{formatValue(positionStats.overall.timeInPosition.topQuartile, 'time')}</TableCell>
+              )}
+            </TableRow>
+          </TableBody>
+        </Table>
         
         <Separator className="my-4" />
         
-        <div className="grid grid-cols-2 gap-8">
-          <div>
-            <h4 className="text-sm font-medium mb-2 text-success">Winning Positions (Positive APY)</h4>
-            <PositionStatsRow 
-              label="Value of Positions" 
-              data={{ 
-                median: positionStats.winning.medianUsdValue, 
-                average: positionStats.winning.medianUsdValue * 1.2
-              }} 
-            />
-            <PositionStatsRow 
-              label="Price Range (%)" 
-              data={{ 
-                median: positionStats.winning.medianRangePercentage, 
-                average: positionStats.winning.medianRangePercentage * 1.1
-              }} 
-            />
-            <PositionStatsRow 
-              label="Time in Position" 
-              data={{ 
-                median: positionStats.winning.medianTimeHours, 
-                average: positionStats.winning.medianTimeHours * 1.15
-              }} 
-            />
-          </div>
-          
-          <div>
-            <h4 className="text-sm font-medium mb-2 text-destructive">Losing Positions (Negative APY)</h4>
-            <PositionStatsRow 
-              label="Value of Positions" 
-              data={{ 
-                median: positionStats.losing.medianUsdValue, 
-                average: positionStats.losing.medianUsdValue * 1.2
-              }} 
-            />
-            <PositionStatsRow 
-              label="Price Range (%)" 
-              data={{ 
-                median: positionStats.losing.medianRangePercentage, 
-                average: positionStats.losing.medianRangePercentage * 1.1
-              }} 
-            />
-            <PositionStatsRow 
-              label="Time in Position" 
-              data={{ 
-                median: positionStats.losing.medianTimeHours, 
-                average: positionStats.losing.medianTimeHours * 0.85
-              }} 
-            />
-          </div>
-        </div>
+        {/* Second section - Winning vs Losing Positions */}
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[180px]">Position Type</TableHead>
+              <TableHead>Metric</TableHead>
+              <TableHead className="text-success">Winning Positions</TableHead>
+              <TableHead className="text-destructive">Losing Positions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell rowSpan={3} className="font-medium border-r">Median Values</TableCell>
+              <TableCell className="font-medium">Value of Positions</TableCell>
+              <TableCell className="text-success">{formatCurrency(positionStats.winning.medianUsdValue)}</TableCell>
+              <TableCell className="text-destructive">{formatCurrency(positionStats.losing.medianUsdValue)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Price Range (%)</TableCell>
+              <TableCell className="text-success">{formatPercentage(positionStats.winning.medianRangePercentage)}</TableCell>
+              <TableCell className="text-destructive">{formatPercentage(positionStats.losing.medianRangePercentage)}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell className="font-medium">Time in Position</TableCell>
+              <TableCell className="text-success">{formatDuration(positionStats.winning.medianTimeHours)}</TableCell>
+              <TableCell className="text-destructive">{formatDuration(positionStats.losing.medianTimeHours)}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   );
