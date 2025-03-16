@@ -34,10 +34,10 @@ const PoolUsageStatistics = ({ swapVolume, swaps, feesCollected }: PoolUsageStat
         <h3 className="text-sm font-semibold mb-3">Pool Usage Statistics</h3>
         <div className="grid grid-cols-5 gap-4 mb-1 border-b pb-1">
           <div className="font-medium text-xs">Metric</div>
-          <div className="font-medium text-xs">1 Day</div>
-          <div className="font-medium text-xs">7 Days</div>
-          <div className="font-medium text-xs">14 Days</div>
-          <div className="font-medium text-xs">30 Days</div>
+          <div className="font-medium text-xs">24h</div>
+          <div className="font-medium text-xs">7d</div>
+          <div className="font-medium text-xs">14d</div>
+          <div className="font-medium text-xs">30d</div>
         </div>
         <StatRow label="Swap Volume" values={swapVolume} />
         <StatRow label="Number of Swaps" values={swaps} />

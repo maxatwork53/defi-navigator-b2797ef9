@@ -3,7 +3,6 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { formatPercentage } from '@/utils/formatters';
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
-import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
 import { Separator } from '@/components/ui/separator';
 
 type StatItem = {
@@ -28,7 +27,7 @@ type PoolLPStatsProps = {
 
 const PoolLPStatistics = ({ tvlChange, lpStats }: PoolLPStatsProps) => {
   // Array of time periods for the table headers
-  const periods = ['1 Day', '7 Days', '14 Days', '30 Days'];
+  const periods = ['24h', '7d', '14d', '30d'];
   
   return (
     <Card className="mb-4">

@@ -54,41 +54,64 @@ export type PoolStats = {
 
 // Generate mock data for the expanded section
 export const generateMockPoolStats = (pool: Pool): PoolStats => {
-  // Time periods
+  // Time periods in order: 24h, 7d, 14d, 30d
   const periods = ['1d', '7d', '14d', '30d'];
   
-  // Mock swap volume
-  const swapVolume = periods.map(period => {
-    const baseValue = pool.tvl * (Math.random() * 0.1); // 0-10% of TVL
-    return { period, value: baseValue };
+  // Base value multipliers for different time periods to ensure cumulative growth
+  const volumeMultipliers = [1, 5, 9, 20];
+  const swapsMultipliers = [1, 6, 12, 25];
+  const feesMultipliers = [1, 6, 11, 22];
+  
+  // Mock swap volume (cumulative)
+  const baseVolumePerDay = pool.tvl * 0.01; // 1% of TVL per day
+  const swapVolume = periods.map((period, index) => {
+    return { 
+      period, 
+      value: baseVolumePerDay * volumeMultipliers[index]
+    };
   });
   
-  // Mock number of swaps
-  const swaps = periods.map(period => {
-    const baseValue = Math.floor(Math.random() * 1000) + 100;
-    return { period, value: baseValue };
+  // Mock number of swaps (cumulative)
+  const baseSwapsPerDay = Math.floor(Math.random() * 100) + 50;
+  const swaps = periods.map((period, index) => {
+    return { 
+      period, 
+      value: baseSwapsPerDay * swapsMultipliers[index]
+    };
   });
   
-  // Mock fees collected
-  const feesCollected = periods.map(period => {
-    const baseValue = pool.feesCollected * (Math.random() * 0.2); // 0-20% of total fees
-    return { period, value: baseValue };
+  // Mock fees collected (cumulative)
+  const baseFeesPerDay = pool.feesCollected * 0.005; // 0.5% of total fees per day
+  const feesCollected = periods.map((period, index) => {
+    return { 
+      period, 
+      value: baseFeesPerDay * feesMultipliers[index]
+    };
   });
   
-  // Mock TVL change percentages
-  const tvlChange = periods.map(period => {
-    const changePercent = (Math.random() * 40) - 20; // -20% to +20%
-    return { period, value: changePercent };
-  });
+  // Mock TVL change percentages (not cumulative since these are relative percentages)
+  const tvlChange = [
+    { period: periods[0], value: (Math.random() * 6) - 3 },        // -3% to +3% for 24h
+    { period: periods[1], value: (Math.random() * 10) - 5 },       // -5% to +5% for 7d
+    { period: periods[2], value: (Math.random() * 16) - 8 },       // -8% to +8% for 14d
+    { period: periods[3], value: (Math.random() * 20) - 10 },      // -10% to +10% for 30d
+  ];
+  
+  // Position change multipliers
+  const positionOpenMultipliers = [1, 4, 7, 12];
+  const positionCloseMultipliers = [1, 3, 6, 9];
   
   // Mock LP stats
+  const baseNewPositionsPerDay = Math.floor(Math.random() * 10) + 5;
+  const baseClosedPositionsPerDay = Math.floor(Math.random() * 5) + 2;
+  
   const lpStats = {
     addressesCount: Math.floor(Math.random() * 500) + 50,
     openPositionsCount: Math.floor(Math.random() * 1000) + 100,
-    newPositions: periods.map(period => ({
+    newPositions: periods.map((period, index) => ({
       period,
-      opened: Math.floor(Math.random() * 100) + 10,
-      closed: Math.floor(Math.random() * 50) + 5
+      opened: baseNewPositionsPerDay * positionOpenMultipliers[index],
+      closed: baseClosedPositionsPerDay * positionCloseMultipliers[index]
     }))
   };
   
