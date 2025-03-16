@@ -10,7 +10,11 @@ export const formatCurrency = (value: number) => {
 };
 
 export const formatPercentage = (value: number) => {
-  return `${value.toFixed(1)}%`;
+  // For very small values (less than 0.1%), show more decimal places
+  if (value < 0.1) {
+    return `${value.toFixed(4)}%`;
+  }
+  return `${value.toFixed(2)}%`;
 };
 
 export const formatDuration = (hours: number) => {
