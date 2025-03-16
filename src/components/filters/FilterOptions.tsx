@@ -139,7 +139,7 @@ const FilterOptions = ({
             />
           </div>
           
-          <CollapsibleContent className="mt-4 space-y-4 bg-white p-4 rounded-md border border-border shadow-sm">
+          <CollapsibleContent className="mt-4 space-y-4 bg-white dark:bg-gray-800 p-4 rounded-md border border-border dark:border-gray-700 shadow-sm">
             <AdvancedFilters 
               filters={filters}
               onCategoryChange={handleCategoryChange}
