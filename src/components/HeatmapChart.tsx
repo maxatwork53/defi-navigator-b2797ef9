@@ -84,7 +84,7 @@ const HeatmapChart = ({
         <div className="h-8 flex items-center mt-2">
           <div className="w-12"></div>
           <div className="flex-grow">
-            <div className="h-3 bg-gradient-to-r from-blue-100 to-blue-600 rounded-sm"></div>
+            <div className="h-3 bg-gradient-to-r from-blue-100 to-blue-600 rounded-sm dark:from-blue-900 dark:to-blue-500"></div>
             <div className="flex justify-between text-xs text-muted-foreground mt-1">
               <span>0</span>
               <span>{maxValue}</span>
