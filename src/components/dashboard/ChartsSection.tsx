@@ -14,13 +14,13 @@ type ChartsSectionProps = {
 const ChartsSection = ({ comparisonData, tvlData, heatmapData, className }: ChartsSectionProps) => {
   return (
     <>
-      <div className={`grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 ${className || ''}`}>
+      <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 ${className || ''}`}>
         {/* Position metrics comparison chart */}
         <ComparisonChart 
           data={comparisonData}
           title="Winning vs Losing Positions"
           description="Comparison of key metrics between winning and losing positions"
-          className="lg:col-span-2"
+          className="h-full"
         />
       </div>
 
@@ -29,6 +29,7 @@ const ChartsSection = ({ comparisonData, tvlData, heatmapData, className }: Char
           data={tvlData}
           title="Total Value Locked"
           description="Trend of TVL across all pools"
+          className="h-full"
         />
         <HeatmapChart 
           data={heatmapData}
@@ -36,6 +37,7 @@ const ChartsSection = ({ comparisonData, tvlData, heatmapData, className }: Char
           description="Distribution of liquidity across price ranges"
           xLabel="Price Lower"
           yLabel="Price Upper"
+          className="h-full"
         />
       </div>
     </>
