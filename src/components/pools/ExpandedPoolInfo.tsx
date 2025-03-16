@@ -28,7 +28,7 @@ const ExpandedPoolInfo = ({ pool }: ExpandedPoolInfoProps) => {
           <PoolUsageStatistics
             swapVolume={poolStats.swapVolume}
             swaps={poolStats.swaps}
-            fees={poolStats.feesCollected}
+            feesCollected={poolStats.feesCollected} 
             tvlChange={poolStats.tvlChange}
           />
         </TabsContent>

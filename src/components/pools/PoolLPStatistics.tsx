@@ -5,11 +5,6 @@ import { formatPercentage } from '@/utils/formatters';
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 
-type StatItem = {
-  period: string;
-  value: number;
-};
-
 type PositionChange = {
   period: string;
   opened: number;
@@ -17,15 +12,12 @@ type PositionChange = {
 };
 
 type PoolLPStatsProps = {
-  tvlChange: StatItem[];
-  lpStats: {
-    addressesCount: number;
-    openPositionsCount: number;
-    newPositions: PositionChange[];
-  };
+  addressesCount: number;
+  openPositionsCount: number;
+  newPositions: PositionChange[];
 };
 
-const PoolLPStatistics = ({ tvlChange, lpStats }: PoolLPStatsProps) => {
+const PoolLPStatistics = ({ addressesCount, openPositionsCount, newPositions }: PoolLPStatsProps) => {
   // Array of time periods for the table headers
   const periods = ['24h', '7d', '14d', '30d'];
   
@@ -38,11 +30,11 @@ const PoolLPStatistics = ({ tvlChange, lpStats }: PoolLPStatsProps) => {
         <div className="grid grid-cols-2 gap-2 mb-2">
           <div className="bg-muted/30 p-2 rounded-md">
             <span className="text-xs text-muted-foreground block">Addresses Providing Liquidity:</span>
-            <span className="font-medium text-base">{lpStats.addressesCount}</span>
+            <span className="font-medium text-base">{addressesCount}</span>
           </div>
           <div className="bg-muted/30 p-2 rounded-md">
             <span className="text-xs text-muted-foreground block">Open Positions:</span>
-            <span className="font-medium text-base">{lpStats.openPositionsCount}</span>
+            <span className="font-medium text-base">{openPositionsCount}</span>
           </div>
         </div>
         
@@ -56,30 +48,10 @@ const PoolLPStatistics = ({ tvlChange, lpStats }: PoolLPStatsProps) => {
           ))}
         </div>
         
-        {/* TVL Change Row */}
-        <div className="grid grid-cols-5 gap-2 py-1">
-          <div className="text-xs text-muted-foreground">TVL Change</div>
-          {tvlChange.map((item, index) => {
-            const isPositive = item.value > 0;
-            return (
-              <div key={index} className="text-xs font-medium">
-                <span className={isPositive ? 'text-success' : 'text-destructive'}>
-                  {isPositive ? (
-                    <ArrowUpRight className="h-3 w-3 mr-0.5 inline" />
-                  ) : (
-                    <ArrowDownRight className="h-3 w-3 mr-0.5 inline" />
-                  )}
-                  {formatPercentage(Math.abs(item.value))}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-        
         {/* Newly Opened Positions Row */}
         <div className="grid grid-cols-5 gap-2 py-1">
           <div className="text-xs text-muted-foreground">Newly Opened</div>
-          {lpStats.newPositions.map((item, index) => (
+          {newPositions.map((item, index) => (
             <div key={index} className="text-xs font-medium">{item.opened}</div>
           ))}
         </div>
@@ -87,7 +59,7 @@ const PoolLPStatistics = ({ tvlChange, lpStats }: PoolLPStatsProps) => {
         {/* Closed Positions Row */}
         <div className="grid grid-cols-5 gap-2 py-1">
           <div className="text-xs text-muted-foreground">Closed</div>
-          {lpStats.newPositions.map((item, index) => (
+          {newPositions.map((item, index) => (
             <div key={index} className="text-xs font-medium">{item.closed}</div>
           ))}
         </div>
