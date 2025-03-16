@@ -1,22 +1,31 @@
+
 import React, { useState } from 'react';
 import Layout from '@/components/Layout';
-import FilterOptions, { FilterState } from '@/components/FilterOptions';
+import FilterOptions from '@/components/FilterOptions';
+import { FilterState } from '@/components/filters/types';
+import PoolsTable from '@/components/pools/PoolsTable';
+import { useFilteredPools } from '@/hooks/use-filtered-pools';
+
 const PoolAnalytics = () => {
   const [filters, setFilters] = useState<FilterState>({
     networks: ['ethereum'],
-    tokenCategory: null,
-    apyRange: null,
-    dex: null,
-    tvlRange: null,
+    tokenCategory: [],
+    apyRange: [],
+    dex: [],
+    tvlRange: [],
     excludeClosedPositions: true,
     searchQuery: ''
   });
+  
+  const pools = useFilteredPools(filters);
+  
   const handleFilterChange = (newFilters: FilterState) => {
     setFilters(newFilters);
     console.log('Filter changed:', newFilters);
-    // Here you would typically fetch or filter data based on the new filters
   };
-  return <Layout>
+  
+  return (
+    <Layout>
       <div className="max-w-7xl mx-auto">
         <div className="mb-8 animate-fade-in">
           <h1 className="text-2xl font-bold">Pool Analytics</h1>
@@ -25,12 +34,19 @@ const PoolAnalytics = () => {
           </p>
         </div>
         
-        <FilterOptions onFilterChange={handleFilterChange} className="animate-fade-in mb-8" defaultNetwork="ethereum" />
+        <FilterOptions 
+          onFilterChange={handleFilterChange} 
+          className="animate-fade-in mb-8" 
+          defaultNetwork="ethereum" 
+        />
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-          
+        <div className="mb-8 animate-fade-in">
+          <h2 className="text-xl font-semibold mb-4">Liquidity Pools</h2>
+          <PoolsTable pools={pools} />
         </div>
       </div>
-    </Layout>;
+    </Layout>
+  );
 };
+
 export default PoolAnalytics;
