@@ -8,7 +8,7 @@ const TelegramBot = () => {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto space-y-8">
-        <Card>
+        <Card className="border-border dark:border-gray-700">
           <CardHeader>
             <CardTitle>DeFi Navigator Telegram Bot</CardTitle>
           </CardHeader>
@@ -19,12 +19,12 @@ const TelegramBot = () => {
             </p>
 
             <div className="flex flex-col md:flex-row gap-8 items-center">
-              <div className="flex-shrink-0 w-64 h-64 bg-secondary/50 flex items-center justify-center border border-border rounded-lg">
+              <div className="flex-shrink-0 w-64 h-64 bg-secondary/50 dark:bg-gray-800/50 flex items-center justify-center border border-border dark:border-gray-700 rounded-lg">
                 <QrCode className="w-40 h-40 text-primary" />
               </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow">
                 {[1, 2, 3, 4].map((idx) => (
-                  <div key={idx} className="aspect-[4/3] bg-secondary/30 rounded-lg border border-border flex items-center justify-center overflow-hidden">
+                  <div key={idx} className="aspect-[4/3] bg-secondary/30 dark:bg-gray-700/30 rounded-lg border border-border dark:border-gray-700 flex items-center justify-center overflow-hidden">
                     <div className="text-xl text-muted-foreground">Screenshot {idx}</div>
                   </div>
                 ))}
