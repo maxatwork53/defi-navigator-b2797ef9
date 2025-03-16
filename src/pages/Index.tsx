@@ -27,7 +27,7 @@ const Index = () => {
 
         <StatCardsSection formattedTvl={formattedTvl} />
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 min-h-[500px]">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 min-h-[250px]">
           <div className="lg:col-span-1 flex">
             <PositionMetricsCard
               positionStats={mockPositionStats}
