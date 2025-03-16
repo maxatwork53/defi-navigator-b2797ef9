@@ -28,8 +28,7 @@ const ExpandedPoolInfo = ({ pool }: ExpandedPoolInfoProps) => {
           <PoolUsageStatistics
             swapVolume={poolStats.swapVolume}
             swaps={poolStats.swaps}
-            feesCollected={poolStats.feesCollected} 
-            tvlChange={poolStats.tvlChange}
+            feesCollected={poolStats.feesCollected}
           />
         </TabsContent>
         
@@ -38,6 +37,7 @@ const ExpandedPoolInfo = ({ pool }: ExpandedPoolInfoProps) => {
             addressesCount={poolStats.lpStats.addressesCount}
             openPositionsCount={poolStats.lpStats.openPositionsCount}
             newPositions={poolStats.lpStats.newPositions}
+            tvlChange={poolStats.tvlChange}
           />
         </TabsContent>
         

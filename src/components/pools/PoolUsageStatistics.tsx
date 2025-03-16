@@ -12,7 +12,6 @@ type PoolUsageStatsProps = {
   swapVolume: StatItem[];
   swaps: StatItem[];
   feesCollected: StatItem[];
-  tvlChange: StatItem[];
 };
 
 const StatRow = ({ label, values }: { label: string, values: StatItem[] }) => (
@@ -28,7 +27,7 @@ const StatRow = ({ label, values }: { label: string, values: StatItem[] }) => (
   </div>
 );
 
-const PoolUsageStatistics = ({ swapVolume, swaps, feesCollected, tvlChange }: PoolUsageStatsProps) => {
+const PoolUsageStatistics = ({ swapVolume, swaps, feesCollected }: PoolUsageStatsProps) => {
   return (
     <Card className="mb-4">
       <CardContent className="pt-6">
@@ -43,7 +42,6 @@ const PoolUsageStatistics = ({ swapVolume, swaps, feesCollected, tvlChange }: Po
         <StatRow label="Swap Volume" values={swapVolume} />
         <StatRow label="Number of Swaps" values={swaps} />
         <StatRow label="Fees Collected" values={feesCollected} />
-        <StatRow label="TVL Change" values={tvlChange} />
       </CardContent>
     </Card>
   );
