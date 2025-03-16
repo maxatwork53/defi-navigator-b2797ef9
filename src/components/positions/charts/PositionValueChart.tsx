@@ -2,7 +2,6 @@
 import React, { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { PoolPosition } from '@/components/positions/PoolPositionsTable';
-import { formatCurrency } from '@/utils/formatters';
 
 type PositionValueChartProps = {
   positions: PoolPosition[];
@@ -72,26 +71,13 @@ const PositionValueChart = ({ positions }: PositionValueChartProps) => {
           <XAxis dataKey="category" tick={{ fontSize: 12 }} />
           <YAxis 
             tick={{ fontSize: 12 }} 
-            tickFormatter={(value) => {
-              if (value >= 1000000) {
-                return `$${(value / 1000000).toFixed(1)}M`;
-              } else if (value >= 1000) {
-                return `$${(value / 1000).toFixed(1)}K`;
-              } else {
-                return `$${value.toFixed(0)}`;
-              }
-            }}
+            tickFormatter={(value) => value >= 1000000 ? `$${(value / 1000000).toFixed(1)}M` : `$${(value / 1000).toFixed(0)}K`}
           />
           <Tooltip 
-            formatter={(value: number) => {
-              if (value >= 1000000) {
-                return [`$${(value / 1000000).toFixed(2)}M`, 'Total Value'];
-              } else if (value >= 1000) {
-                return [`$${(value / 1000).toFixed(2)}K`, 'Total Value'];
-              } else {
-                return [`$${value.toFixed(2)}`, 'Total Value'];
-              }
-            }}
+            formatter={(value: number) => [
+              value >= 1000000 ? `$${(value / 1000000).toFixed(2)}M` : `$${(value / 1000).toFixed(2)}K`, 
+              'Total Value'
+            ]}
             contentStyle={{ 
               backgroundColor: 'white', 
               border: '1px solid #f0f0f0',

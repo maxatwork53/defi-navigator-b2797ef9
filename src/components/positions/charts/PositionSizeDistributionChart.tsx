@@ -78,7 +78,6 @@ const PositionSizeDistributionChart = ({ positions }: PositionSizeDistributionCh
               borderRadius: '8px',
               boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
             }} 
-            labelFormatter={(label) => `Size Range: ${label}`}
           />
           <Bar dataKey="count" name="Number of Positions" fill="#3b82f6" radius={[4, 4, 0, 0]} />
         </BarChart>
