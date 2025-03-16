@@ -38,9 +38,9 @@ const AI = () => {
         
         {/* Coming Soon Box - Moved to the top */}
         <div className="grid grid-cols-1 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up">
-            <h2 className="text-lg font-semibold mb-4">Coming Soon</h2>
-            <p className="text-muted-foreground">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 animate-slide-in-up">
+            <h2 className="text-lg font-semibold mb-4 dark:text-white">Coming Soon</h2>
+            <p className="text-muted-foreground dark:text-gray-300">
               Our AI assistant will soon provide personalized recommendations and insights
               based on your liquidity positions and market conditions.
             </p>
@@ -48,33 +48,33 @@ const AI = () => {
         </div>
         
         <div className="grid grid-cols-1 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up">
-            <h2 className="text-lg font-semibold mb-4">Position Recommendations</h2>
-            <p className="text-muted-foreground mb-4">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 animate-slide-in-up">
+            <h2 className="text-lg font-semibold mb-4 dark:text-white">Position Recommendations</h2>
+            <p className="text-muted-foreground dark:text-gray-300 mb-4">
               Our AI analyzes market conditions and your portfolio to suggest optimal liquidity positions.
             </p>
             
             <div className="space-y-4">
-              <div className="p-4 border border-border rounded-lg hover:bg-secondary/10 transition-colors">
+              <div className="p-4 border border-border dark:border-gray-700 rounded-lg hover:bg-secondary/10 dark:hover:bg-gray-700/50 transition-colors">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-medium">ETH/USDC 0.05% Pool</h3>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">
+                  <h3 className="font-medium dark:text-white">ETH/USDC 0.05% Pool</h3>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success dark:bg-success/20">
                     High Confidence
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground mt-2">
+                <p className="text-sm text-muted-foreground dark:text-gray-300 mt-2">
                   Based on your portfolio and recent price stability, adding liquidity to ETH/USDC with a ±1.5% range around the current price could yield 18-22% APY.
                 </p>
               </div>
               
-              <div className="p-4 border border-border rounded-lg hover:bg-secondary/10 transition-colors">
+              <div className="p-4 border border-border dark:border-gray-700 rounded-lg hover:bg-secondary/10 dark:hover:bg-gray-700/50 transition-colors">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-medium">WBTC/ETH 0.3% Pool</h3>
-                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground">
+                  <h3 className="font-medium dark:text-white">WBTC/ETH 0.3% Pool</h3>
+                  <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary text-foreground dark:bg-gray-600 dark:text-gray-200">
                     Medium Confidence
                   </span>
                 </div>
-                <p className="text-sm text-muted-foreground mt-2">
+                <p className="text-sm text-muted-foreground dark:text-gray-300 mt-2">
                   Historical correlation between these assets suggests a ±4% range would capture 85% of price movements while maximizing fee generation.
                 </p>
               </div>
@@ -84,37 +84,37 @@ const AI = () => {
         
         {/* AI Reports Table */}
         <div className="grid grid-cols-1 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 animate-slide-in-up">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">AI Reports</h2>
+              <h2 className="text-lg font-semibold dark:text-white">AI Reports</h2>
               <Button variant="outline" size="sm">
                 <BarChart2 className="mr-2 h-4 w-4" />
                 Request New Report
               </Button>
             </div>
             
-            <div className="rounded-md border">
+            <div className="rounded-md border border-border dark:border-gray-700">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Report Title</TableHead>
-                    <TableHead>Date Generated</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                  <TableRow className="hover:bg-secondary/50 dark:hover:bg-gray-700/50">
+                    <TableHead className="dark:text-gray-300">Report Title</TableHead>
+                    <TableHead className="dark:text-gray-300">Date Generated</TableHead>
+                    <TableHead className="dark:text-gray-300">Status</TableHead>
+                    <TableHead className="text-right dark:text-gray-300">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {mockReports.map((report) => (
-                    <TableRow key={report.id}>
-                      <TableCell className="font-medium">{report.title}</TableCell>
-                      <TableCell>{report.date}</TableCell>
+                    <TableRow key={report.id} className="hover:bg-secondary/50 dark:hover:bg-gray-700/50">
+                      <TableCell className="font-medium dark:text-white">{report.title}</TableCell>
+                      <TableCell className="dark:text-gray-300">{report.date}</TableCell>
                       <TableCell>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success dark:bg-success/20">
                           {report.status}
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
-                        <Button variant="ghost" size="sm">View</Button>
+                        <Button variant="ghost" size="sm" className="dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700">View</Button>
                       </TableCell>
                     </TableRow>
                   ))}
@@ -126,16 +126,16 @@ const AI = () => {
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
-                    <PaginationPrevious href="#" />
+                    <PaginationPrevious href="#" className="dark:text-gray-300 dark:hover:text-white" />
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink href="#" isActive>1</PaginationLink>
+                    <PaginationLink href="#" isActive className="dark:bg-primary dark:text-white">1</PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink href="#">2</PaginationLink>
+                    <PaginationLink href="#" className="dark:text-gray-300 dark:hover:text-white">2</PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationNext href="#" />
+                    <PaginationNext href="#" className="dark:text-gray-300 dark:hover:text-white" />
                   </PaginationItem>
                 </PaginationContent>
               </Pagination>
@@ -145,39 +145,39 @@ const AI = () => {
         
         {/* AI Schedule Table */}
         <div className="grid grid-cols-1 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm border border-border p-6 animate-slide-in-up">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-border dark:border-gray-700 p-6 animate-slide-in-up">
             <div className="flex justify-between items-center mb-4">
-              <h2 className="text-lg font-semibold">AI Schedule</h2>
+              <h2 className="text-lg font-semibold dark:text-white">AI Schedule</h2>
               <Button variant="outline" size="sm">
                 <Clock className="mr-2 h-4 w-4" />
                 Schedule Task
               </Button>
             </div>
             
-            <div className="rounded-md border">
+            <div className="rounded-md border border-border dark:border-gray-700">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Task</TableHead>
-                    <TableHead>Frequency</TableHead>
-                    <TableHead>Next Run</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
+                  <TableRow className="hover:bg-secondary/50 dark:hover:bg-gray-700/50">
+                    <TableHead className="dark:text-gray-300">Task</TableHead>
+                    <TableHead className="dark:text-gray-300">Frequency</TableHead>
+                    <TableHead className="dark:text-gray-300">Next Run</TableHead>
+                    <TableHead className="dark:text-gray-300">Status</TableHead>
+                    <TableHead className="text-right dark:text-gray-300">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {mockSchedule.map((task) => (
-                    <TableRow key={task.id}>
-                      <TableCell className="font-medium">{task.task || task.title}</TableCell>
-                      <TableCell>{task.frequency}</TableCell>
-                      <TableCell>{task.nextRun}</TableCell>
+                    <TableRow key={task.id} className="hover:bg-secondary/50 dark:hover:bg-gray-700/50">
+                      <TableCell className="font-medium dark:text-white">{task.task || task.title}</TableCell>
+                      <TableCell className="dark:text-gray-300">{task.frequency}</TableCell>
+                      <TableCell className="dark:text-gray-300">{task.nextRun}</TableCell>
                       <TableCell>
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-success/10 text-success dark:bg-success/20">
                           {task.status}
                         </span>
                       </TableCell>
                       <TableCell className="text-right">
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" className="dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700">
                           <RefreshCw className="h-4 w-4" />
                         </Button>
                       </TableCell>
@@ -191,16 +191,16 @@ const AI = () => {
               <Pagination>
                 <PaginationContent>
                   <PaginationItem>
-                    <PaginationPrevious href="#" />
+                    <PaginationPrevious href="#" className="dark:text-gray-300 dark:hover:text-white" />
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink href="#" isActive>1</PaginationLink>
+                    <PaginationLink href="#" isActive className="dark:bg-primary dark:text-white">1</PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationLink href="#">2</PaginationLink>
+                    <PaginationLink href="#" className="dark:text-gray-300 dark:hover:text-white">2</PaginationLink>
                   </PaginationItem>
                   <PaginationItem>
-                    <PaginationNext href="#" />
+                    <PaginationNext href="#" className="dark:text-gray-300 dark:hover:text-white" />
                   </PaginationItem>
                 </PaginationContent>
               </Pagination>
