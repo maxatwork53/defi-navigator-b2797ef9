@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import Layout from '@/components/Layout';
 import DashboardHeader from '@/components/dashboard/DashboardHeader';
 import StatCardsSection from '@/components/dashboard/StatCardsSection';
@@ -10,7 +10,6 @@ import { mockPositions } from '@/data/mockPositions';
 import { Position } from '@/components/positions/PositionTableRow';
 import { formatCurrency, formatPercentage, formatDuration } from '@/utils/formatters';
 import { 
-  networks, 
   mockPositionStats, 
   mockComparisonData,
   mockTvlData,
@@ -18,18 +17,13 @@ import {
 } from '@/utils/mockData';
 
 const Index = () => {
-  const [selectedNetwork, setSelectedNetwork] = useState('ethereum');
   const currentTvl = mockTvlData[mockTvlData.length - 1].value;
   const formattedTvl = formatCurrency(currentTvl);
 
   return (
     <Layout>
       <div className="max-w-7xl mx-auto">
-        <DashboardHeader 
-          networks={networks}
-          selectedNetwork={selectedNetwork}
-          onNetworkChange={setSelectedNetwork}
-        />
+        <DashboardHeader />
 
         <StatCardsSection formattedTvl={formattedTvl} />
 
@@ -49,7 +43,7 @@ const Index = () => {
         </div>
         
         <div className="mt-8">
-          <h2 className="text-xl font-semibold mb-4">Your Positions</h2>
+          <h2 className="text-xl font-semibold mb-4 dark:text-white">Your Positions</h2>
           <PositionsTable positions={mockPositions as Position[]} />
         </div>
       </div>

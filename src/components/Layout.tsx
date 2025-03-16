@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -45,28 +46,28 @@ const Layout = ({ children }: LayoutProps) => {
   }, [isMobile]);
 
   return (
-    <div className="flex min-h-screen bg-secondary/30">
+    <div className="flex min-h-screen bg-secondary/30 dark:bg-gray-900">
       {/* Sidebar */}
       <aside 
         className={cn(
-          "fixed inset-y-0 left-0 z-20 w-64 bg-white border-r border-border transform transition-transform duration-300 ease-in-out",
+          "fixed inset-y-0 left-0 z-20 w-64 bg-white dark:bg-gray-800 border-r border-border dark:border-gray-700 transform transition-transform duration-300 ease-in-out",
           sidebarOpen ? "translate-x-0" : "-translate-x-full",
           isMobile ? "shadow-lg" : ""
         )}
       >
-        <div className="h-16 flex items-center justify-between px-4 border-b border-border">
+        <div className="h-16 flex items-center justify-between px-4 border-b border-border dark:border-gray-700">
           <Link to="/" className="flex items-center space-x-2">
             <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-              <BarChart3 className="w-5 h-5 text-white" />
+              <BarChart3 className="w-5 h-5 text-white dark:text-gray-900" />
             </div>
-            <span className="font-semibold text-lg">DeFi Navigator</span>
+            <span className="font-semibold text-lg dark:text-white">DeFi Navigator</span>
           </Link>
           {isMobile && (
             <button 
               onClick={() => setSidebarOpen(false)}
-              className="p-1 rounded-md hover:bg-secondary"
+              className="p-1 rounded-md hover:bg-secondary dark:hover:bg-gray-700"
             >
-              <X className="w-5 h-5" />
+              <X className="w-5 h-5 dark:text-gray-400" />
             </button>
           )}
         </div>
@@ -78,8 +79,8 @@ const Layout = ({ children }: LayoutProps) => {
               className={cn(
                 "flex items-center space-x-3 px-3 py-2 rounded-md transition-colors duration-200",
                 location.pathname === link.to
-                  ? "bg-primary text-primary-foreground"
-                  : "text-foreground/70 hover:bg-secondary hover:text-foreground"
+                  ? "bg-primary text-primary-foreground dark:bg-primary/80"
+                  : "text-foreground/70 hover:bg-secondary hover:text-foreground dark:text-gray-300 dark:hover:bg-gray-700"
               )}
             >
               {link.icon}
@@ -104,20 +105,20 @@ const Layout = ({ children }: LayoutProps) => {
           sidebarOpen ? (isMobile ? "ml-0" : "ml-64") : "ml-0"
         )}
       >
-        <header className="h-16 bg-white border-b border-border sticky top-0 z-10 px-4 flex items-center justify-between">
+        <header className="h-16 bg-white dark:bg-gray-800 border-b border-border dark:border-gray-700 sticky top-0 z-10 px-4 flex items-center justify-between">
           {(!sidebarOpen || isMobile) && (
             <button
               onClick={() => setSidebarOpen(true)}
-              className="p-1.5 rounded-md hover:bg-secondary"
+              className="p-1.5 rounded-md hover:bg-secondary dark:hover:bg-gray-700"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-5 h-5 dark:text-gray-300" />
             </button>
           )}
-          <div className="text-lg font-medium ml-auto">
+          <div className="text-lg font-medium dark:text-white">
             {SIDEBAR_LINKS.find(link => link.to === location.pathname)?.label || 'Dashboard'}
           </div>
-          <div className="ml-auto">
-            {/* Header content here */}
+          <div className="ml-auto flex items-center gap-2">
+            <ThemeToggle />
           </div>
         </header>
         <div className="p-6">
