@@ -3,6 +3,8 @@ import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { formatPercentage } from '@/utils/formatters';
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from '@/components/ui/table';
+import { Separator } from '@/components/ui/separator';
 
 type StatItem = {
   period: string;
@@ -24,79 +26,77 @@ type PoolLPStatsProps = {
   };
 };
 
-const TvlChangeRow = ({ values }: { values: StatItem[] }) => (
-  <div className="grid grid-cols-5 gap-4 py-1">
-    <div className="text-sm text-muted-foreground">TVL Change</div>
-    {values.map((item, index) => {
-      const isPositive = item.value > 0;
-      return (
-        <div key={index} className="text-sm font-medium flex items-center">
-          <span className={isPositive ? 'text-success' : 'text-destructive'}>
-            {isPositive ? (
-              <ArrowUpRight className="h-3.5 w-3.5 mr-1 inline" />
-            ) : (
-              <ArrowDownRight className="h-3.5 w-3.5 mr-1 inline" />
-            )}
-            {formatPercentage(Math.abs(item.value))}
-          </span>
-        </div>
-      );
-    })}
-  </div>
-);
-
 const PoolLPStatistics = ({ tvlChange, lpStats }: PoolLPStatsProps) => {
+  // Array of time periods for the table headers
+  const periods = ['1 Day', '7 Days', '14 Days', '30 Days'];
+  
   return (
     <Card className="mb-4">
       <CardContent className="pt-6">
         <h3 className="text-sm font-semibold mb-3">Pool LP Statistics</h3>
-        <div className="grid grid-cols-5 gap-4 mb-1 border-b pb-1">
-          <div className="font-medium text-xs">Metric</div>
-          <div className="font-medium text-xs">1 Day</div>
-          <div className="font-medium text-xs">7 Days</div>
-          <div className="font-medium text-xs">14 Days</div>
-          <div className="font-medium text-xs">30 Days</div>
-        </div>
-        <TvlChangeRow values={tvlChange} />
         
-        <div className="mt-4 mb-2">
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <span className="text-sm text-muted-foreground">Addresses Providing Liquidity:</span>{' '}
-              <span className="font-medium">{lpStats.addressesCount}</span>
-            </div>
-            <div>
-              <span className="text-sm text-muted-foreground">Open Positions:</span>{' '}
-              <span className="font-medium">{lpStats.openPositionsCount}</span>
-            </div>
+        {/* Top metrics - Addresses and Positions */}
+        <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="bg-muted/30 p-3 rounded-md">
+            <span className="text-sm text-muted-foreground block mb-1">Addresses Providing Liquidity:</span>
+            <span className="font-medium text-lg">{lpStats.addressesCount}</span>
+          </div>
+          <div className="bg-muted/30 p-3 rounded-md">
+            <span className="text-sm text-muted-foreground block mb-1">Open Positions:</span>
+            <span className="font-medium text-lg">{lpStats.openPositionsCount}</span>
           </div>
         </div>
         
-        <div className="grid grid-cols-5 gap-4 mb-1 border-b pb-1 mt-4">
-          <div className="font-medium text-xs">Position Changes</div>
-          <div className="font-medium text-xs">1 Day</div>
-          <div className="font-medium text-xs">7 Days</div>
-          <div className="font-medium text-xs">14 Days</div>
-          <div className="font-medium text-xs">30 Days</div>
-        </div>
+        <Separator className="my-4" />
         
-        <div className="grid grid-cols-5 gap-4 py-1">
-          <div className="text-sm text-muted-foreground">Newly Opened</div>
-          {lpStats.newPositions.map((item, index) => (
-            <div key={index} className="text-sm font-medium">
-              {item.opened}
-            </div>
-          ))}
-        </div>
-        
-        <div className="grid grid-cols-5 gap-4 py-1">
-          <div className="text-sm text-muted-foreground">Closed</div>
-          {lpStats.newPositions.map((item, index) => (
-            <div key={index} className="text-sm font-medium">
-              {item.closed}
-            </div>
-          ))}
-        </div>
+        {/* Unified table for time-based metrics */}
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[180px]">Metric</TableHead>
+              {periods.map((period, index) => (
+                <TableHead key={index}>{period}</TableHead>
+              ))}
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {/* TVL Change Row */}
+            <TableRow>
+              <TableCell className="font-medium">TVL Change</TableCell>
+              {tvlChange.map((item, index) => {
+                const isPositive = item.value > 0;
+                return (
+                  <TableCell key={index}>
+                    <span className={isPositive ? 'text-success' : 'text-destructive'}>
+                      {isPositive ? (
+                        <ArrowUpRight className="h-3.5 w-3.5 mr-1 inline" />
+                      ) : (
+                        <ArrowDownRight className="h-3.5 w-3.5 mr-1 inline" />
+                      )}
+                      {formatPercentage(Math.abs(item.value))}
+                    </span>
+                  </TableCell>
+                );
+              })}
+            </TableRow>
+            
+            {/* Newly Opened Positions Row */}
+            <TableRow>
+              <TableCell className="font-medium">Newly Opened</TableCell>
+              {lpStats.newPositions.map((item, index) => (
+                <TableCell key={index}>{item.opened}</TableCell>
+              ))}
+            </TableRow>
+            
+            {/* Closed Positions Row */}
+            <TableRow>
+              <TableCell className="font-medium">Closed</TableCell>
+              {lpStats.newPositions.map((item, index) => (
+                <TableCell key={index}>{item.closed}</TableCell>
+              ))}
+            </TableRow>
+          </TableBody>
+        </Table>
       </CardContent>
     </Card>
   );
