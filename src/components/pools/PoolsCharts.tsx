@@ -1,3 +1,4 @@
+
 import React, { memo, useMemo } from 'react';
 import { Pool } from '@/data/mockPools';
 import { generateChartData } from '@/utils/mock';
@@ -17,7 +18,7 @@ const PoolsCharts = ({
   const winningPositionsData = useMemo(() => generateChartData(pools, 'winningPositions'), [pools]);
   const tvlToFeesRatioData = useMemo(() => generateChartData(pools, 'tvlToFeesRatio'), [pools]);
   const feesCollectedData = useMemo(() => generateChartData(pools, 'feesCollected'), [pools]);
-  const priceRangeData = useMemo(() => generateChartData(pools, 'priceRange'), [pools]);
+  const tvlChangeData = useMemo(() => generateChartData(pools, 'priceRange'), [pools]);
   return <div className="mt-8 space-y-8">
       <h2 className="text-xl font-semibold mb-4">Top Pool Metrics</h2>
       
@@ -25,7 +26,7 @@ const PoolsCharts = ({
         <WinningPositionsChart data={winningPositionsData} />
         <TvlToFeesRatioChart data={tvlToFeesRatioData} />
         <FeesCollectedChart data={feesCollectedData} pools={pools} />
-        <PriceRangeChart data={priceRangeData} pools={pools} />
+        <PriceRangeChart data={tvlChangeData} pools={pools} />
       </div>
     </div>;
 };

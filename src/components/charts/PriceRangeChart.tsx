@@ -1,8 +1,8 @@
 
 import React, { memo } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { Pool } from '@/data/mockPools';
-import { ChartContainer, ChartTooltipContent, ChartLegend } from '@/components/ui/chart';
+import { ChartContainer, ChartTooltipContent } from '@/components/ui/chart';
 import { getColor } from '@/utils/chartUtils';
 
 type PriceRangeChartProps = {
@@ -28,18 +28,19 @@ const PriceRangeChart = memo(({ data, pools }: PriceRangeChartProps) => {
   
   return (
     <div className="bg-card rounded-lg border shadow-sm p-6">
-      <h3 className="text-lg font-medium mb-4">Median Price Ranges (30 Days)</h3>
+      <h3 className="text-lg font-medium mb-4">TVL Change (30 Days)</h3>
       <div className="h-[300px]">
         <ChartContainer config={chartConfig}>
-          <AreaChart
+          <LineChart
             data={data}
             margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
             <YAxis 
               tick={{ fontSize: 12 }}
-              tickFormatter={(value) => `${value.toFixed(1)}%`}
+              tickFormatter={(value) => `${value}%`}
+              domain={['auto', 'auto']}
             />
             <Tooltip 
               content={
@@ -48,28 +49,19 @@ const PriceRangeChart = memo(({ data, pools }: PriceRangeChartProps) => {
                 />
               }
             />
-            <ChartLegend />
-            {pools.slice(0, 3).map((pool, index) => (
-              <React.Fragment key={pool.id}>
-                <Area
-                  type="monotone"
-                  dataKey={`${pool.name} (Win)`}
-                  stroke={getColor(index, 'win')}
-                  fill={getColor(index, 'win')}
-                  fillOpacity={0.2}
-                  strokeWidth={2}
-                />
-                <Area
-                  type="monotone"
-                  dataKey={`${pool.name} (Loss)`}
-                  stroke={getColor(index, 'lose')}
-                  fill={getColor(index, 'lose')}
-                  fillOpacity={0.2}
-                  strokeWidth={2}
-                />
-              </React.Fragment>
+            <Legend />
+            {pools.slice(0, 5).map((pool, index) => (
+              <Line
+                key={pool.id}
+                type="monotone"
+                dataKey={pool.name}
+                stroke={getColor(index, 'base')}
+                strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 6 }}
+              />
             ))}
-          </AreaChart>
+          </LineChart>
         </ChartContainer>
       </div>
     </div>
