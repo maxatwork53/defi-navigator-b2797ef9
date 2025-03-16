@@ -39,12 +39,12 @@ const HeatmapChart = ({
   };
 
   return (
-    <div className={cn("chart-container animate-slide-in-up flex flex-col h-full", className)}>
+    <div className={cn("chart-container animate-slide-in-up h-full", className)}>
       <div className="mb-4">
         <h3 className="text-lg font-semibold">{title}</h3>
         {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
       </div>
-      <div className="flex flex-col flex-1 min-h-[250px]">
+      <div className="flex flex-col h-[300px]">
         <div className="flex items-center">
           <div className="w-12"></div>
           <div className="flex-grow text-center text-xs font-medium text-muted-foreground">

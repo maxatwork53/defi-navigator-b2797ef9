@@ -24,12 +24,12 @@ const AreaChart = ({
   className 
 }: AreaChartProps) => {
   return (
-    <div className={cn("chart-container animate-slide-in-up flex flex-col h-full", className)}>
+    <div className={cn("chart-container animate-slide-in-up h-full", className)}>
       <div className="mb-4">
         <h3 className="text-lg font-semibold">{title}</h3>
         {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
       </div>
-      <div className="flex-1 min-h-[250px]">
+      <div className="h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
           <RechartsAreaChart
             data={data}
