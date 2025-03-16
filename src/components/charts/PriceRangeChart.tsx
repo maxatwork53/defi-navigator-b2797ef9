@@ -40,7 +40,7 @@ const PriceRangeChart = memo(({ data, pools }: PriceRangeChartProps) => {
             <YAxis 
               tick={{ fontSize: 12 }}
               tickFormatter={(value) => `${value}%`}
-              domain={['auto', 'auto']}
+              domain={['dataMin - 5', 'dataMax + 5']}
             />
             <Tooltip 
               content={

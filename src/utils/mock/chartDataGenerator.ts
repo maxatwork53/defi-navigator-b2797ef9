@@ -1,3 +1,4 @@
+
 import { Pool } from '@/data/mockPools';
 import { generateMockPoolStats } from './poolStatsGenerator';
 
@@ -119,45 +120,47 @@ const generateTvlChangePercentageData = (pools: Pool[]) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   });
   
-  // Generate base TVL values for day 30 (today)
-  const baseTvlValues = new Map<string, number>();
-  poolsToShow.forEach(pool => {
-    baseTvlValues.set(pool.id, pool.tvl);
-  });
-  
-  // Generate daily percentage changes relative to the final day (which is 100%)
+  // Generate mock TVL trends with all pools starting at 100% on day 1
   return dates.map((date, dayIndex) => {
     const dataPoint: any = { date };
     
     poolsToShow.forEach(pool => {
-      // The base volatility factor determines how much the TVL fluctuates
-      const volatilityFactor = 0.15; // 15% maximum fluctuation
-      
-      // On the last day (today), all pools should show 100%
-      if (dayIndex === days - 1) {
+      // All pools start at 100% on day 1 (first day)
+      if (dayIndex === 0) {
         dataPoint[pool.name] = 100;
       } else {
-        // For previous days, generate realistic fluctuations that trend upward or downward
-        // based on the pool's characteristics
-        
-        // Calculate days from the first day (0-based)
-        const daysFromStart = dayIndex;
-        const daysToEnd = days - 1 - dayIndex;
-        
         // Pool-specific trend factor (some pools grow, others decline)
-        const poolTrendFactor = (parseInt(pool.id, 36) % 10) / 10 - 0.5; // -0.5 to 0.5
+        // Using pool.id to create a deterministic but varied behavior per pool
+        const poolTrendFactor = (parseInt(pool.id, 36) % 10) / 10 - 0.3; // -0.3 to 0.7 range
         
-        // Linear trend component based on pool characteristics
-        const trendComponent = poolTrendFactor * (daysFromStart / days) * 30; // Up to ±15% trend
+        // The volatility factor determines how much the TVL fluctuates day to day
+        const volatilityFactor = 0.015; // 1.5% maximum daily fluctuation
         
-        // Random fluctuation component (higher for earlier dates, converging to 100% at the end)
-        const randomFactor = (Math.random() * 2 - 1) * volatilityFactor * (daysToEnd / days);
+        // Get previous day's value
+        const prevDayValue = dayIndex > 0 ? 
+          parseFloat(dates.map((d, i) => ({ date: d, index: i }))
+            .filter(d => d.index === dayIndex - 1)
+            .map(d => {
+              // This is a bit hacky but works for our mock data
+              const prevDataPoint = dates.map((date, i) => ({ 
+                date, 
+                value: precalculatedChartData.get(`priceRange_${pools.map(p => p.id).join('_')}`) ? 
+                  precalculatedChartData.get(`priceRange_${pools.map(p => p.id).join('_')}`)[i][pool.name] : 
+                  100 
+              }))
+              .find(point => point.date === d.date)?.value || 100;
+              
+              return prevDataPoint;
+            })[0] || 100) : 100;
         
-        // Calculate percentage (100% is the baseline at the end)
-        const percentage = 100 + trendComponent + randomFactor * 100;
+        // Random daily change with slight trend bias
+        const dailyChange = (Math.random() * 2 - 1) * volatilityFactor + poolTrendFactor / days;
+        
+        // Calculate new value with compounding effect
+        const newValue = prevDayValue * (1 + dailyChange);
         
         // Assign the percentage value to this pool for this day
-        dataPoint[pool.name] = parseFloat(percentage.toFixed(1));
+        dataPoint[pool.name] = parseFloat(newValue.toFixed(1));
       }
     });
     
