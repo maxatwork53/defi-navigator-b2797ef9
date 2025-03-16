@@ -23,7 +23,7 @@ const ComparisonChart = ({ data, title, description, className }: ComparisonChar
         <h3 className="text-lg font-semibold">{title}</h3>
         {description && <p className="text-sm text-muted-foreground mt-1">{description}</p>}
       </div>
-      <div className="h-[calc(100%-60px)]">
+      <div className="h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={data}
