@@ -62,19 +62,21 @@ const PositionPerformanceChart = ({ positions }: PositionPerformanceChartProps) 
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-          <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(var(--muted) / 0.3)" />
+          <XAxis dataKey="name" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
           <YAxis 
             tick={{ fontSize: 12 }} 
             tickFormatter={(value) => `${value.toFixed(1)}%`}
+            stroke="hsl(var(--muted-foreground))" 
           />
           <Tooltip 
             formatter={(value: number) => [`${value.toFixed(2)}%`, value >= 0 ? 'Return' : 'Loss']}
             contentStyle={{ 
-              backgroundColor: 'white', 
-              border: '1px solid #f0f0f0',
+              backgroundColor: 'hsl(var(--card))', 
+              border: '1px solid hsl(var(--border))',
               borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              color: 'hsl(var(--card-foreground))'
             }} 
           />
           <Legend />

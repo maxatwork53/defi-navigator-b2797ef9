@@ -27,7 +27,7 @@ const PriceRangeChart = memo(({ data, pools }: PriceRangeChartProps) => {
   };
   
   return (
-    <div className="bg-card rounded-lg border shadow-sm p-6">
+    <div className="bg-card rounded-lg border shadow-sm p-6 dark:bg-gray-800 dark:border-gray-700">
       <h3 className="text-lg font-medium mb-4">TVL Change (30 Days)</h3>
       <div className="h-[300px]">
         <ChartContainer config={chartConfig}>
@@ -35,12 +35,17 @@ const PriceRangeChart = memo(({ data, pools }: PriceRangeChartProps) => {
             data={data}
             margin={{ top: 20, right: 30, left: 20, bottom: 20 }}
           >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="date" tick={{ fontSize: 12 }} />
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(var(--muted) / 0.3)" />
+            <XAxis 
+              dataKey="date" 
+              tick={{ fontSize: 12 }}
+              stroke="hsl(var(--muted-foreground))" 
+            />
             <YAxis 
               tick={{ fontSize: 12 }}
               tickFormatter={(value) => `${value}%`}
               domain={['auto', 'auto']}
+              stroke="hsl(var(--muted-foreground))"
             />
             <Tooltip 
               content={

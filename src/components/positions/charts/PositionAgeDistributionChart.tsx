@@ -68,16 +68,17 @@ const PositionAgeDistributionChart = ({ positions }: PositionAgeDistributionChar
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-          <XAxis dataKey="age" tick={{ fontSize: 12 }} />
-          <YAxis tick={{ fontSize: 12 }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(var(--muted) / 0.3)" />
+          <XAxis dataKey="age" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
+          <YAxis tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
           <Tooltip 
             formatter={(value: number) => [`${value} positions`, 'Count']}
             contentStyle={{ 
-              backgroundColor: 'white', 
-              border: '1px solid #f0f0f0',
+              backgroundColor: 'hsl(var(--card))', 
+              border: '1px solid hsl(var(--border))',
               borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              color: 'hsl(var(--card-foreground))'
             }} 
           />
           <Bar dataKey="count" name="Number of Positions" fill="#f59e0b" radius={[4, 4, 0, 0]} />

@@ -68,8 +68,8 @@ const PositionValueChart = ({ positions }: PositionValueChartProps) => {
             bottom: 5,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-          <XAxis dataKey="category" tick={{ fontSize: 12 }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(var(--muted) / 0.3)" />
+          <XAxis dataKey="category" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" />
           <YAxis 
             tick={{ fontSize: 12 }} 
             tickFormatter={(value) => {
@@ -81,6 +81,7 @@ const PositionValueChart = ({ positions }: PositionValueChartProps) => {
                 return `$${value.toFixed(0)}`;
               }
             }}
+            stroke="hsl(var(--muted-foreground))"
           />
           <Tooltip 
             formatter={(value: number) => {
@@ -93,10 +94,11 @@ const PositionValueChart = ({ positions }: PositionValueChartProps) => {
               }
             }}
             contentStyle={{ 
-              backgroundColor: 'white', 
-              border: '1px solid #f0f0f0',
+              backgroundColor: 'hsl(var(--card))', 
+              border: '1px solid hsl(var(--border))',
               borderRadius: '8px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.05)',
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+              color: 'hsl(var(--card-foreground))'
             }} 
           />
           <Bar dataKey="value" name="Total Value (USD)" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
