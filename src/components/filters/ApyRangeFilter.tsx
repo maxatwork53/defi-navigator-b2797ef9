@@ -4,7 +4,7 @@ import { filterIcons, apyRanges } from './constants';
 import FilterDropdown from './FilterDropdown';
 
 type ApyRangeFilterProps = {
-  selectedValue: string | null;
+  selectedValue: string[];
   onChange: (rangeId: string) => void;
 };
 

@@ -21,10 +21,10 @@ const FilterOptions = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [filters, setFilters] = useState<FilterState>({
     networks: defaultNetwork === 'all' ? [] : [defaultNetwork],
-    tokenCategory: null,
-    apyRange: null,
-    dex: null,
-    tvlRange: null,
+    tokenCategory: [],
+    apyRange: [],
+    dex: [],
+    tvlRange: [],
     excludeClosedPositions: true,
     searchQuery: '',
   });
@@ -46,37 +46,65 @@ const FilterOptions = ({
   };
 
   const handleCategoryChange = (categoryId: string) => {
-    const updatedFilters = { 
-      ...filters, 
-      tokenCategory: categoryId === 'all' ? null : categoryId 
-    };
+    let updatedCategories: string[];
+    
+    if (categoryId === 'all') {
+      updatedCategories = [];
+    } else if (filters.tokenCategory.includes(categoryId)) {
+      updatedCategories = filters.tokenCategory.filter(id => id !== categoryId);
+    } else {
+      updatedCategories = [...filters.tokenCategory, categoryId];
+    }
+    
+    const updatedFilters = { ...filters, tokenCategory: updatedCategories };
     setFilters(updatedFilters);
     onFilterChange?.(updatedFilters);
   };
 
   const handleApyRangeChange = (rangeId: string) => {
-    const updatedFilters = { 
-      ...filters, 
-      apyRange: rangeId === 'all' ? null : rangeId 
-    };
+    let updatedRanges: string[];
+    
+    if (rangeId === 'all') {
+      updatedRanges = [];
+    } else if (filters.apyRange.includes(rangeId)) {
+      updatedRanges = filters.apyRange.filter(id => id !== rangeId);
+    } else {
+      updatedRanges = [...filters.apyRange, rangeId];
+    }
+    
+    const updatedFilters = { ...filters, apyRange: updatedRanges };
     setFilters(updatedFilters);
     onFilterChange?.(updatedFilters);
   };
 
   const handleDexChange = (dexId: string) => {
-    const updatedFilters = { 
-      ...filters, 
-      dex: dexId === 'all' ? null : dexId 
-    };
+    let updatedDexes: string[];
+    
+    if (dexId === 'all') {
+      updatedDexes = [];
+    } else if (filters.dex.includes(dexId)) {
+      updatedDexes = filters.dex.filter(id => id !== dexId);
+    } else {
+      updatedDexes = [...filters.dex, dexId];
+    }
+    
+    const updatedFilters = { ...filters, dex: updatedDexes };
     setFilters(updatedFilters);
     onFilterChange?.(updatedFilters);
   };
 
   const handleTvlRangeChange = (rangeId: string) => {
-    const updatedFilters = { 
-      ...filters, 
-      tvlRange: rangeId === 'all' ? null : rangeId 
-    };
+    let updatedRanges: string[];
+    
+    if (rangeId === 'all') {
+      updatedRanges = [];
+    } else if (filters.tvlRange.includes(rangeId)) {
+      updatedRanges = filters.tvlRange.filter(id => id !== rangeId);
+    } else {
+      updatedRanges = [...filters.tvlRange, rangeId];
+    }
+    
+    const updatedFilters = { ...filters, tvlRange: updatedRanges };
     setFilters(updatedFilters);
     onFilterChange?.(updatedFilters);
   };
@@ -96,10 +124,10 @@ const FilterOptions = ({
   const getActiveFiltersCount = () => {
     let count = 0;
     if (filters.networks.length > 0) count++;
-    if (filters.tokenCategory) count++;
-    if (filters.apyRange) count++;
-    if (filters.dex) count++;
-    if (filters.tvlRange) count++;
+    if (filters.tokenCategory.length > 0) count++;
+    if (filters.apyRange.length > 0) count++;
+    if (filters.dex.length > 0) count++;
+    if (filters.tvlRange.length > 0) count++;
     if (filters.searchQuery) count++;
     return count;
   };

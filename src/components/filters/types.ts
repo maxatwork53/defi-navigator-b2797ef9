@@ -1,10 +1,10 @@
 
 export type FilterState = {
   networks: string[];
-  tokenCategory: string | null;
-  apyRange: string | null;
-  dex: string | null;
-  tvlRange: string | null;
+  tokenCategory: string[];
+  apyRange: string[];
+  dex: string[];
+  tvlRange: string[];
   excludeClosedPositions: boolean;
   searchQuery: string;
 };

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Check } from 'lucide-react';
 import { FilterOption } from './types';
 import {
   DropdownMenu,
@@ -16,7 +16,7 @@ import {
 type FilterDropdownProps = {
   label: string;
   options: FilterOption[];
-  selectedValue: string | null;
+  selectedValue: string[];
   onChange: (value: string) => void;
   icon?: React.ReactNode;
   className?: string;
@@ -30,9 +30,16 @@ const FilterDropdown = ({
   icon,
   className,
 }: FilterDropdownProps) => {
-  const selectedOption = options.find(option => 
-    option.id === selectedValue || (option.id === 'all' && !selectedValue)
-  );
+  const getDisplayLabel = () => {
+    if (selectedValue.length === 0) {
+      return label;
+    } else if (selectedValue.length === 1) {
+      const option = options.find(opt => opt.id === selectedValue[0]);
+      return option ? option.label : label;
+    } else {
+      return `${label} (${selectedValue.length})`;
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -40,7 +47,7 @@ const FilterDropdown = ({
         <div className="flex items-center gap-2">
           {icon}
           <span>
-            {selectedOption?.label || label}
+            {getDisplayLabel()}
           </span>
         </div>
         <ChevronDown className="w-4 h-4" />
@@ -49,19 +56,30 @@ const FilterDropdown = ({
         <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {options.map((option) => (
+          <DropdownMenuItem 
+            key="all"
+            onClick={() => onChange('all')}
+            className={cn(
+              "cursor-pointer",
+              selectedValue.length === 0 ? "bg-primary/10" : ""
+            )}
+          >
+            <div className="flex items-center justify-between w-full">
+              <span>All {label}</span>
+              {selectedValue.length === 0 && <Check className="w-4 h-4" />}
+            </div>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          {options.filter(option => option.id !== 'all').map((option) => (
             <DropdownMenuItem 
               key={option.id}
               onClick={() => onChange(option.id)}
-              className={cn(
-                "cursor-pointer",
-                (option.id === 'all' && !selectedValue) || 
-                selectedValue === option.id 
-                  ? "bg-primary/10" 
-                  : ""
-              )}
+              className="cursor-pointer"
             >
-              {option.label}
+              <div className="flex items-center justify-between w-full">
+                <span>{option.label}</span>
+                {selectedValue.includes(option.id) && <Check className="w-4 h-4" />}
+              </div>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>

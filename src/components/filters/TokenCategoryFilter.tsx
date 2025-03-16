@@ -4,7 +4,7 @@ import { filterIcons, tokenCategories } from './constants';
 import FilterDropdown from './FilterDropdown';
 
 type TokenCategoryFilterProps = {
-  selectedValue: string | null;
+  selectedValue: string[];
   onChange: (categoryId: string) => void;
 };
 

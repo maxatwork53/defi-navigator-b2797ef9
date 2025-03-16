@@ -4,7 +4,7 @@ import { filterIcons, dexOptions } from './constants';
 import FilterDropdown from './FilterDropdown';
 
 type DexFilterProps = {
-  selectedValue: string | null;
+  selectedValue: string[];
   onChange: (dexId: string) => void;
 };
 

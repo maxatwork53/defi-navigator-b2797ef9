@@ -4,7 +4,7 @@ import { filterIcons, tvlRanges } from './constants';
 import FilterDropdown from './FilterDropdown';
 
 type TvlRangeFilterProps = {
-  selectedValue: string | null;
+  selectedValue: string[];
   onChange: (rangeId: string) => void;
 };
 
@@ -15,7 +15,7 @@ const TvlRangeFilter = ({ selectedValue, onChange }: TvlRangeFilterProps) => {
       options={tvlRanges}
       selectedValue={selectedValue}
       onChange={onChange}
-      icon={filterIcons.tvlRange}
+      icon={filterIcons.dex}
     />
   );
 };
