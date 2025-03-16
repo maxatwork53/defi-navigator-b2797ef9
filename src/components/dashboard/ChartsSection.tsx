@@ -13,14 +13,14 @@ type ChartsSectionProps = {
 
 const ChartsSection = ({ comparisonData, tvlData, heatmapData, className }: ChartsSectionProps) => {
   return (
-    <div className={`flex flex-col w-full ${className || ''}`}>
-      <div className="w-full mb-6">
+    <div className={`flex flex-col w-full h-full ${className || ''}`}>
+      <div className="w-full mb-6 h-full">
         {/* Position metrics comparison chart */}
         <ComparisonChart 
           data={comparisonData}
           title="Winning vs Losing Positions"
           description="Comparison of key metrics between winning and losing positions"
-          className="w-full"
+          className="w-full h-full"
         />
       </div>
 
