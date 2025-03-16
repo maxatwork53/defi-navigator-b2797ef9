@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Pool } from '@/data/mockPools';
 import { formatCurrency } from '@/utils/formatters';
@@ -15,36 +14,35 @@ const networkNames: Record<string, string> = {
   arbitrum: 'Arbitrum',
   base: 'Base'
 };
-
 type PoolsTableProps = {
   pools: Pool[];
 };
-
-const PoolsTable = ({ pools }: PoolsTableProps) => {
-  const { toast } = useToast();
+const PoolsTable = ({
+  pools
+}: PoolsTableProps) => {
+  const {
+    toast
+  } = useToast();
   const [expandedPoolId, setExpandedPoolId] = useState<string | null>(null);
-  
   const copyToClipboard = (address: string, event: React.MouseEvent) => {
     event.stopPropagation(); // Prevent row expansion when clicking copy button
     navigator.clipboard.writeText(address);
     toast({
       title: "Address copied",
       description: "Pool address copied to clipboard",
-      duration: 3000,
+      duration: 3000
     });
   };
-
   const handleRowClick = (poolId: string) => {
     setExpandedPoolId(prevId => prevId === poolId ? null : poolId);
   };
-
-  return (
-    <div className="rounded-md border">
+  return <div className="rounded-md border">
       <Table>
         <TableHeader>
           <TableRow className="h-8">
             <TableHead className="w-[100px]">Actions</TableHead>
-            <TableHead>Pool Name</TableHead>
+            <TableHead>Pool Tokens
+          </TableHead>
             <TableHead>Fee</TableHead>
             <TableHead>Network</TableHead>
             <TableHead>DEX</TableHead>
@@ -54,41 +52,20 @@ const PoolsTable = ({ pools }: PoolsTableProps) => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {pools.length > 0 ? (
-            pools.map((pool) => (
-              <React.Fragment key={pool.id}>
-                <TableRow 
-                  className="h-10 cursor-pointer hover:bg-muted/50"
-                  onClick={() => handleRowClick(pool.id)}
-                >
+          {pools.length > 0 ? pools.map(pool => <React.Fragment key={pool.id}>
+                <TableRow className="h-10 cursor-pointer hover:bg-muted/50" onClick={() => handleRowClick(pool.id)}>
                   <TableCell className="py-2">
                     <div className="flex items-center space-x-2">
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        onClick={(e) => copyToClipboard(pool.address, e)}
-                        title="Copy Pool Address"
-                        className="h-7 w-7"
-                      >
+                      <Button variant="ghost" size="icon" onClick={e => copyToClipboard(pool.address, e)} title="Copy Pool Address" className="h-7 w-7">
                         <Copy className="h-3.5 w-3.5" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        asChild
-                        title="View Position Analytics"
-                        className="h-7 w-7"
-                        onClick={(e) => e.stopPropagation()} // Prevent row expansion
-                      >
+                      <Button variant="ghost" size="icon" asChild title="View Position Analytics" className="h-7 w-7" onClick={e => e.stopPropagation()} // Prevent row expansion
+                >
                         <Link to={`/position-analytics?poolId=${pool.id}`}>
                           <ExternalLink className="h-3.5 w-3.5" />
                         </Link>
                       </Button>
-                      {expandedPoolId === pool.id ? (
-                        <ChevronUp className="h-3.5 w-3.5 text-muted-foreground" />
-                      ) : (
-                        <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
-                      )}
+                      {expandedPoolId === pool.id ? <ChevronUp className="h-3.5 w-3.5 text-muted-foreground" /> : <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />}
                     </div>
                   </TableCell>
                   <TableCell className="font-medium py-2">{pool.name}</TableCell>
@@ -99,26 +76,18 @@ const PoolsTable = ({ pools }: PoolsTableProps) => {
                   <TableCell className="py-2">{formatCurrency(pool.volume)}</TableCell>
                   <TableCell className="py-2">{formatCurrency(pool.feesCollected)}</TableCell>
                 </TableRow>
-                {expandedPoolId === pool.id && (
-                  <TableRow>
+                {expandedPoolId === pool.id && <TableRow>
                     <TableCell colSpan={8} className="p-0">
                       <ExpandedPoolInfo pool={pool} />
                     </TableCell>
-                  </TableRow>
-                )}
-              </React.Fragment>
-            ))
-          ) : (
-            <TableRow>
+                  </TableRow>}
+              </React.Fragment>) : <TableRow>
               <TableCell colSpan={8} className="h-24 text-center">
                 No pools found matching your filters.
               </TableCell>
-            </TableRow>
-          )}
+            </TableRow>}
         </TableBody>
       </Table>
-    </div>
-  );
+    </div>;
 };
-
 export default PoolsTable;
