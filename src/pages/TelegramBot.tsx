@@ -3,6 +3,7 @@ import React from 'react';
 import Layout from '@/components/Layout';
 import { QrCode, Check } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
 
 const TelegramBot = () => {
   return (
@@ -38,11 +39,17 @@ const TelegramBot = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[1, 2, 3, 4].map((idx) => (
-                <div key={idx} className="aspect-[4/3] bg-gradient-to-br from-secondary/20 to-background dark:from-gray-700/30 dark:to-gray-800/30 rounded-lg border border-border dark:border-gray-700 flex items-center justify-center overflow-hidden relative group hover:shadow-md transition-all duration-300">
-                  <div className="absolute inset-0 bg-grid-pattern opacity-5 group-hover:opacity-10 transition-opacity"></div>
-                  <div className="text-xl text-muted-foreground group-hover:text-primary transition-colors">Bot UI {idx}</div>
+                <div key={idx} className="rounded-lg border border-border dark:border-gray-700 overflow-hidden relative group hover:shadow-md transition-all duration-300">
+                  <AspectRatio ratio={9/16} className="bg-gradient-to-br from-secondary/20 to-background dark:from-gray-700/30 dark:to-gray-800/30">
+                    <div className="absolute inset-0 bg-grid-pattern opacity-5 group-hover:opacity-10 transition-opacity"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="text-muted-foreground group-hover:text-primary transition-colors text-sm">
+                        Telegram Bot UI {idx}
+                      </div>
+                    </div>
+                  </AspectRatio>
                 </div>
               ))}
             </div>
