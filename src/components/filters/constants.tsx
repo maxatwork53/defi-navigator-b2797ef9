@@ -33,9 +33,6 @@ export const networkIcons = {
 
 export const networks: FilterOption[] = [
   { id: 'all', label: 'All Networks', icon: networkIcons.all },
-  { id: 'ethereum', label: 'Ethereum', icon: networkIcons.ethereum },
-  { id: 'arbitrum', label: 'Arbitrum', icon: networkIcons.arbitrum },
-  { id: 'base', label: 'Base', icon: networkIcons.base },
 ];
 
 export const tokenCategories: FilterOption[] = [
