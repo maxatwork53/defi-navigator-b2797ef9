@@ -35,7 +35,7 @@ const PoolsTable = ({ pools }: PoolsTableProps) => {
     <div className="rounded-md border">
       <Table>
         <TableHeader>
-          <TableRow>
+          <TableRow className="h-8">
             <TableHead className="w-[100px]">Actions</TableHead>
             <TableHead>Pool Name</TableHead>
             <TableHead>Fee</TableHead>
@@ -48,35 +48,37 @@ const PoolsTable = ({ pools }: PoolsTableProps) => {
         <TableBody>
           {pools.length > 0 ? (
             pools.map((pool) => (
-              <TableRow key={pool.id}>
-                <TableCell>
+              <TableRow key={pool.id} className="h-10">
+                <TableCell className="py-2">
                   <div className="flex space-x-2">
                     <Button 
                       variant="ghost" 
                       size="icon" 
                       onClick={() => copyToClipboard(pool.address)}
                       title="Copy Pool Address"
+                      className="h-7 w-7"
                     >
-                      <Copy className="h-4 w-4" />
+                      <Copy className="h-3.5 w-3.5" />
                     </Button>
                     <Button
                       variant="ghost"
                       size="icon"
                       asChild
                       title="View Position Analytics"
+                      className="h-7 w-7"
                     >
                       <Link to={`/position-analytics?poolId=${pool.id}`}>
-                        <ExternalLink className="h-4 w-4" />
+                        <ExternalLink className="h-3.5 w-3.5" />
                       </Link>
                     </Button>
                   </div>
                 </TableCell>
-                <TableCell className="font-medium">{pool.name}</TableCell>
-                <TableCell>{pool.fee}</TableCell>
-                <TableCell>{networkNames[pool.network] || pool.network}</TableCell>
-                <TableCell>{pool.dex}</TableCell>
-                <TableCell>{formatCurrency(pool.tvl)}</TableCell>
-                <TableCell>{formatCurrency(pool.feesCollected)}</TableCell>
+                <TableCell className="font-medium py-2">{pool.name}</TableCell>
+                <TableCell className="py-2">{pool.fee}</TableCell>
+                <TableCell className="py-2">{networkNames[pool.network] || pool.network}</TableCell>
+                <TableCell className="py-2">{pool.dex}</TableCell>
+                <TableCell className="py-2">{formatCurrency(pool.tvl)}</TableCell>
+                <TableCell className="py-2">{formatCurrency(pool.feesCollected)}</TableCell>
               </TableRow>
             ))
           ) : (
