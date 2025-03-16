@@ -43,7 +43,7 @@ const TelegramBot = () => {
               {[1, 2, 3, 4].map((idx) => (
                 <div key={idx} className="relative w-full">
                   <AspectRatio ratio={9/16} className="overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-background dark:from-gray-700/30 dark:to-gray-800/30 rounded-lg border border-border dark:border-gray-700 flex items-center justify-center overflow-hidden relative group hover:shadow-md transition-all duration-300">
+                    <div className="w-full h-full bg-gradient-to-br from-secondary/20 to-background dark:from-gray-700/30 dark:to-gray-800/30 rounded-lg border border-border dark:border-gray-700 flex items-center justify-center relative group hover:shadow-md transition-all duration-300">
                       <div className="absolute inset-0 bg-grid-pattern opacity-5 group-hover:opacity-10 transition-opacity"></div>
                       <div className="text-xl text-muted-foreground group-hover:text-primary transition-colors">Bot UI {idx}</div>
                     </div>
