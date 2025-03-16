@@ -13,9 +13,9 @@ const ExpandedPoolInfo = ({
 }: ExpandedPoolInfoProps) => {
   // Use memoization to avoid recalculating on every render
   const poolStats = useMemo(() => generateMockPoolStats(pool), [pool]);
-  return <div className="py-[7px] px-[22px]">
-      <Tabs defaultValue="usage" className="w-full">
-        <TabsList className="w-full mb-4">
+  return <div className="px-[22px] py-0">
+      <Tabs defaultValue="usage" className="w-full py-0 my-[12px]">
+        <TabsList className="w-full mb-4 py-0 my-[3px]">
           <TabsTrigger value="usage" className="flex-1">Pool Usage</TabsTrigger>
           <TabsTrigger value="liquidity" className="flex-1">LP Statistics</TabsTrigger>
           <TabsTrigger value="positions" className="flex-1">Position Metrics</TabsTrigger>
