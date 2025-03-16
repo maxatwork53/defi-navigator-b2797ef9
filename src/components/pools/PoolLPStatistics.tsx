@@ -32,23 +32,6 @@ const PoolLPStatistics = ({ addressesCount, openPositionsCount, newPositions, tv
       <CardContent className="pt-6">
         <h3 className="text-sm font-semibold mb-2">Pool LP Statistics</h3>
         
-        {/* TVL Change section */}
-        <div className="grid grid-cols-5 gap-2 mb-3 border-b pb-2">
-          <div className="text-xs text-muted-foreground">TVL Change</div>
-          {tvlChange.map((item, index) => (
-            <div key={index} className="flex items-center">
-              {item.value > 0 ? (
-                <ArrowUpRight className="h-3.5 w-3.5 text-success mr-1" />
-              ) : (
-                <ArrowDownRight className="h-3.5 w-3.5 text-destructive mr-1" />
-              )}
-              <span className={`text-xs font-medium ${item.value > 0 ? 'text-success' : 'text-destructive'}`}>
-                {formatPercentage(item.value)}
-              </span>
-            </div>
-          ))}
-        </div>
-        
         {/* Top metrics row - Addresses and Positions */}
         <div className="grid grid-cols-2 gap-2 mb-2">
           <div className="bg-muted/30 p-2 rounded-md">
@@ -68,6 +51,23 @@ const PoolLPStatistics = ({ addressesCount, openPositionsCount, newPositions, tv
           <div className="font-medium text-xs">Metric</div>
           {periods.map((period, index) => (
             <div key={index} className="font-medium text-xs">{period}</div>
+          ))}
+        </div>
+        
+        {/* TVL Change Row */}
+        <div className="grid grid-cols-5 gap-2 py-1 border-b border-border/30">
+          <div className="text-xs text-muted-foreground">TVL Change</div>
+          {tvlChange.map((item, index) => (
+            <div key={index} className="flex items-center">
+              {item.value > 0 ? (
+                <ArrowUpRight className="h-3.5 w-3.5 text-success mr-1" />
+              ) : (
+                <ArrowDownRight className="h-3.5 w-3.5 text-destructive mr-1" />
+              )}
+              <span className={`text-xs font-medium ${item.value > 0 ? 'text-success' : 'text-destructive'}`}>
+                {formatPercentage(item.value)}
+              </span>
+            </div>
           ))}
         </div>
         
