@@ -1,4 +1,3 @@
-
 import { Pool } from '@/data/mockPools';
 import { generateMockPoolStats } from './poolStatsGenerator';
 
@@ -120,13 +119,13 @@ const generateTvlChangePercentageData = (pools: Pool[]) => {
     return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
   });
   
-  // Generate base TVL values for day 1 (start with 100% for all pools)
+  // Generate base TVL values for day 30 (today)
   const baseTvlValues = new Map<string, number>();
   poolsToShow.forEach(pool => {
-    baseTvlValues.set(pool.id, 100); // All pools start at 100%
+    baseTvlValues.set(pool.id, pool.tvl);
   });
   
-  // Generate daily percentage changes
+  // Generate daily percentage changes relative to the final day (which is 100%)
   return dates.map((date, dayIndex) => {
     const dataPoint: any = { date };
     
@@ -134,15 +133,16 @@ const generateTvlChangePercentageData = (pools: Pool[]) => {
       // The base volatility factor determines how much the TVL fluctuates
       const volatilityFactor = 0.15; // 15% maximum fluctuation
       
-      // For the first day, all pools should show 100%
-      if (dayIndex === 0) {
+      // On the last day (today), all pools should show 100%
+      if (dayIndex === days - 1) {
         dataPoint[pool.name] = 100;
       } else {
-        // For subsequent days, generate realistic fluctuations that trend upward or downward
+        // For previous days, generate realistic fluctuations that trend upward or downward
         // based on the pool's characteristics
         
         // Calculate days from the first day (0-based)
         const daysFromStart = dayIndex;
+        const daysToEnd = days - 1 - dayIndex;
         
         // Pool-specific trend factor (some pools grow, others decline)
         const poolTrendFactor = (parseInt(pool.id, 36) % 10) / 10 - 0.5; // -0.5 to 0.5
@@ -150,17 +150,11 @@ const generateTvlChangePercentageData = (pools: Pool[]) => {
         // Linear trend component based on pool characteristics
         const trendComponent = poolTrendFactor * (daysFromStart / days) * 30; // Up to ±15% trend
         
-        // Random walk component (accumulates over time)
-        const randomFactor = (Math.random() * 2 - 1) * volatilityFactor;
+        // Random fluctuation component (higher for earlier dates, converging to 100% at the end)
+        const randomFactor = (Math.random() * 2 - 1) * volatilityFactor * (daysToEnd / days);
         
-        // Previous day's value + today's change (or 100 if it's the first day)
-        const prevDayValue = dataPoint[pool.name] || 
-          (dayIndex > 0 ? dates[dayIndex-1][pool.name] : 100);
-        
-        // Calculate percentage (100% is the baseline at the start)
-        // For day > 1, we add the trend component and random factor to previous day
-        const dailyChange = trendComponent + randomFactor * 5;
-        const percentage = prevDayValue + dailyChange;
+        // Calculate percentage (100% is the baseline at the end)
+        const percentage = 100 + trendComponent + randomFactor * 100;
         
         // Assign the percentage value to this pool for this day
         dataPoint[pool.name] = parseFloat(percentage.toFixed(1));
